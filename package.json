@@ -3,7 +3,7 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "start": "node ./dist/index.js"
+        "start": "drizzle-kit push && node ./dist/index.js"
     },
     "dependencies": {
         "@hono/node-server": "^1.19.9",
