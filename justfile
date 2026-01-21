@@ -9,8 +9,8 @@ drizzle := node_bin + "drizzle-kit"
 
 # Default action
 _:
-    just fmt
     just lint
+    just fmt
 
 # Install
 i:
@@ -19,10 +19,6 @@ i:
 # Upgrade dependencies
 up:
     pnpm up --interactive --latest --recursive
-
-# Format code
-fmt:
-    ./{{biome}} check --write .
 
 # Lint code with TypeScript Compiler
 tsc:
@@ -33,6 +29,10 @@ lint:
     ls-lint
     typos
     just tsc
+
+# Format code
+fmt:
+    ./{{biome}} check --write .
 
 # Preprocess
 pre:
