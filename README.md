@@ -1,6 +1,6 @@
-# Vite + Hono + OpenAPI + TypeScript
+# Hong Kong Schools API
 
-This template provides a setup to get Hono working in Vite with OpenAPI and TypeScript.
+This is an API for retrieving information about schools in Hong Kong.
 
 ## Dependencies
 
@@ -56,6 +56,14 @@ This command will format the code.
 
 ```sh
 just fmt
+```
+
+### Preprocessing
+
+This command will do preprocessing for the server.
+
+```sh
+just pre
 ```
 
 ### Development
