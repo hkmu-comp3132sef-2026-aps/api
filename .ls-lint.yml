@@ -1,0 +1,20 @@
+ls:
+    .dir: kebab-case
+    .js: kebab-case
+    .ts: kebab-case
+
+ignore:
+    - .git
+    - .github
+    - __MACOSX
+    - "**/__MACOSX"
+    - .DS_Store
+    - "**/.DS_Store"
+    - node_modules
+    - "**/node_modules"
+    - dist
+    - "**/dist"
+    - "@types"
+    - "**/@types"
+    - "**/*.log"
+    - "**/pnpm-debug.log*"

@@ -1,0 +1,16 @@
+{
+    "extends": "@apst/tsconfig",
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "baseUrl": ".",
+        "paths": {
+            "#/*": [
+                "./src/*"
+            ]
+        }
+    },
+    "include": [
+        "./src/**/*"
+    ]
+}
