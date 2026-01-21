@@ -46,9 +46,9 @@ router.get(
     openAPIRouteHandler(router, {
         documentation: {
             info: {
-                title: "API",
+                title: "Hong Kong Schools API",
                 version: VERSION,
-                description: "Documentation for the API",
+                description: "Documentation for the Hong Kong Schools API",
             },
         },
     }),
@@ -57,7 +57,7 @@ router.get(
 router.get(
     "/openapi",
     Scalar({
-        pageTitle: "API Documentation",
+        pageTitle: "Hong Kong Schools API Documentation",
         theme: "default",
         url: OPEN_API_JSON_PATH,
     }),
