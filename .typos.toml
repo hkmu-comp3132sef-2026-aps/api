@@ -9,3 +9,6 @@ extend-exclude = [
     "*.log",
     "pnpm-debug.log*",
 ]
+
+[default.extend-words]
+YAU = "YAU"

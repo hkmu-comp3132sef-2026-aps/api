@@ -10,6 +10,7 @@ import { Hono } from "hono";
 import { VERSION } from "#/consts/env";
 import { jsonResponseSchema } from "#/lib/schemas/response";
 import { routerInfo } from "#/modules/info/routes";
+import { routerSchool } from "#/modules/school/routes";
 
 const OPEN_API_JSON_PATH = "/openapi.json" as const;
 
@@ -37,6 +38,8 @@ router.get(
 );
 
 router.route("/info", routerInfo);
+
+router.route("/schools", routerSchool);
 
 router.get(
     OPEN_API_JSON_PATH,

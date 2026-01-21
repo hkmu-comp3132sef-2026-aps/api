@@ -5,6 +5,7 @@ node_bin := "node_modules/.bin/"
 tsc := node_bin + "tsc"
 biome := node_bin + "biome"
 vite := node_bin + "vite"
+drizzle := node_bin + "drizzle-kit"
 
 # Default action
 _:
@@ -32,6 +33,10 @@ lint:
     ls-lint
     typos
     just tsc
+
+# Preprocess
+pre:
+    ./{{drizzle}} push
 
 # Start development server
 dev:

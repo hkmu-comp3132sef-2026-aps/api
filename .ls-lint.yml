@@ -16,5 +16,6 @@ ignore:
     - "**/dist"
     - "@types"
     - "**/@types"
+    - "**/_*"
     - "**/*.log"
     - "**/pnpm-debug.log*"
