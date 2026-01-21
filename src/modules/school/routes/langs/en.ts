@@ -3,9 +3,18 @@ import { describeRoute, resolver, validator } from "@jderstd/hono-openapi";
 import { Hono } from "hono";
 import { z } from "zod";
 
-import { createJsonSuccessResponseSchema } from "#/lib/schemas/response";
+import { ServiceErrorCode } from "#/lib/errors/code";
+import {
+    createJsonFailureResponseSchema,
+    createJsonResponseErrorSchema,
+    createJsonSuccessResponseSchema,
+} from "#/lib/schemas/response";
 import { schoolSchemaEn } from "#/modules/school/schemas/langs/en";
-import { serviceSchoolReadEn } from "#/modules/school/services/read/en";
+import {
+    ServiceSchoolReadEnErrorCode,
+    ServiceSchoolReadEnErrorMessage,
+    serviceSchoolReadEn,
+} from "#/modules/school/services/read/en";
 import { serviceSchoolReadAllEn } from "#/modules/school/services/read-all/en";
 
 const router: Hono = new Hono();
@@ -24,6 +33,39 @@ router.get(
                         schema: resolver(
                             createJsonSuccessResponseSchema(
                                 z.array(schoolSchemaEn),
+                            ),
+                        ),
+                    },
+                },
+            },
+            400: {
+                description: "Bad request/Parse error",
+                content: {
+                    "application/json": {
+                        schema: resolver(
+                            createJsonFailureResponseSchema(
+                                createJsonResponseErrorSchema(
+                                    z.enum([
+                                        ServiceErrorCode.BAD_REQUEST,
+                                        "parse",
+                                    ]),
+                                    z.string(),
+                                ),
+                            ),
+                        ),
+                    },
+                },
+            },
+            500: {
+                description: "Server error",
+                content: {
+                    "application/json": {
+                        schema: resolver(
+                            createJsonFailureResponseSchema(
+                                createJsonResponseErrorSchema(
+                                    z.literal(ServiceErrorCode.SERVER),
+                                    z.string(),
+                                ),
                             ),
                         ),
                     },
@@ -57,6 +99,58 @@ router.get(
                     "application/json": {
                         schema: resolver(
                             createJsonSuccessResponseSchema(schoolSchemaEn),
+                        ),
+                    },
+                },
+            },
+            400: {
+                description: "Bad request/Parse error",
+                content: {
+                    "application/json": {
+                        schema: resolver(
+                            createJsonFailureResponseSchema(
+                                createJsonResponseErrorSchema(
+                                    z.enum([
+                                        ServiceErrorCode.BAD_REQUEST,
+                                        "parse",
+                                    ]),
+                                    z.string(),
+                                ),
+                            ),
+                        ),
+                    },
+                },
+            },
+            404: {
+                description: "School not found",
+                content: {
+                    "application/json": {
+                        schema: resolver(
+                            createJsonFailureResponseSchema(
+                                createJsonResponseErrorSchema(
+                                    z.literal(
+                                        ServiceSchoolReadEnErrorCode.NOT_FOUND,
+                                    ),
+                                    z.literal(
+                                        ServiceSchoolReadEnErrorMessage.NOT_FOUND,
+                                    ),
+                                ),
+                            ),
+                        ),
+                    },
+                },
+            },
+            500: {
+                description: "Server error",
+                content: {
+                    "application/json": {
+                        schema: resolver(
+                            createJsonFailureResponseSchema(
+                                createJsonResponseErrorSchema(
+                                    z.literal(ServiceErrorCode.SERVER),
+                                    z.string(),
+                                ),
+                            ),
                         ),
                     },
                 },

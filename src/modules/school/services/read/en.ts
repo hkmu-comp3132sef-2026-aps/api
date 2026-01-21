@@ -11,12 +11,10 @@ import { schools } from "#/schema/school";
 
 enum ServiceSchoolReadEnErrorCode {
     NOT_FOUND = "not_found",
-    UNKNOWN = "unknown",
 }
 
 enum ServiceSchoolReadEnErrorMessage {
     NOT_FOUND = "School not found",
-    UNKNOWN = "Unknown error",
 }
 
 const getErrorMessage = (
@@ -25,8 +23,6 @@ const getErrorMessage = (
     switch (code) {
         case ServiceSchoolReadEnErrorCode.NOT_FOUND:
             return ServiceSchoolReadEnErrorMessage.NOT_FOUND;
-        case ServiceSchoolReadEnErrorCode.UNKNOWN:
-            return ServiceSchoolReadEnErrorMessage.UNKNOWN;
     }
 };
 
