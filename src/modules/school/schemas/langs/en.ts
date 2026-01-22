@@ -31,14 +31,14 @@ const schoolStudentsGenderEn = [
 
 const schoolStudentsGenderEnumEn = z.enum(schoolStudentsGenderEn);
 
-const schoolSessiionEn = [
+const schoolSessionEn = [
     "A.M.",
     "P.M.",
     "EVENING",
     "WHOLE DAY",
 ] as const;
 
-const schoolSessionEnumEn = z.enum(schoolSessiionEn);
+const schoolSessionEnumEn = z.enum(schoolSessionEn);
 
 const schoolDistrictEn = [
     "KOWLOON CITY",
@@ -103,7 +103,7 @@ export {
     schoolCategoryEnumEn,
     schoolStudentsGenderEn,
     schoolStudentsGenderEnumEn,
-    schoolSessiionEn,
+    schoolSessionEn,
     schoolSessionEnumEn,
     schoolDistrictEn,
     schoolDistrictEnumEn,
