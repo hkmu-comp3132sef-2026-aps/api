@@ -1,5 +1,7 @@
 import { serveStatic } from "@hono/node-server/serve-static";
+import { bodyLimit } from "@jderstd/hono/body-limit";
 import { notFoundHandler } from "@jderstd/hono/not-found";
+import { timeLimit } from "@jderstd/hono/time-limit";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 
@@ -15,6 +17,18 @@ app.use(
             return origin;
         },
         credentials: true,
+    }),
+);
+
+app.use(
+    bodyLimit({
+        max: 10 * 1024 * 1024,
+    }),
+);
+
+app.use(
+    timeLimit({
+        max: 10 * 1000,
     }),
 );
 

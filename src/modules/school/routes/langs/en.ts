@@ -1,9 +1,9 @@
 import { createJsonResponse } from "@jderstd/hono/response";
+import { ResponseErrorCode } from "@jderstd/hono/response/error";
 import { describeRoute, resolver, validator } from "@jderstd/hono-openapi";
 import { Hono } from "hono";
 import { z } from "zod";
 
-import { ServiceErrorCode } from "#/lib/errors/code";
 import {
     createJsonFailureResponseSchema,
     createJsonResponseErrorSchema,
@@ -46,7 +46,7 @@ router.get(
                             createJsonFailureResponseSchema(
                                 createJsonResponseErrorSchema(
                                     z.enum([
-                                        ServiceErrorCode.BAD_REQUEST,
+                                        ResponseErrorCode.BadRequest,
                                         "parse",
                                     ]),
                                     z.string(),
@@ -63,7 +63,7 @@ router.get(
                         schema: resolver(
                             createJsonFailureResponseSchema(
                                 createJsonResponseErrorSchema(
-                                    z.literal(ServiceErrorCode.SERVER),
+                                    z.literal(ResponseErrorCode.Server),
                                     z.string(),
                                 ),
                             ),
@@ -111,7 +111,7 @@ router.get(
                             createJsonFailureResponseSchema(
                                 createJsonResponseErrorSchema(
                                     z.enum([
-                                        ServiceErrorCode.BAD_REQUEST,
+                                        ResponseErrorCode.BadRequest,
                                         "parse",
                                     ]),
                                     z.string(),
@@ -147,7 +147,7 @@ router.get(
                         schema: resolver(
                             createJsonFailureResponseSchema(
                                 createJsonResponseErrorSchema(
-                                    z.literal(ServiceErrorCode.SERVER),
+                                    z.literal(ResponseErrorCode.Server),
                                     z.string(),
                                 ),
                             ),
