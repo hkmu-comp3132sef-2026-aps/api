@@ -1,5 +1,8 @@
 import { createJsonResponse } from "@jderstd/hono/response";
-import { ResponseErrorCode } from "@jderstd/hono/response/error";
+import {
+    ResponseErrorCode,
+    ResponseErrorMessage,
+} from "@jderstd/hono/response/error";
 import { describeRoute, resolver, validator } from "@jderstd/hono-openapi";
 import { Hono } from "hono";
 import { z } from "zod";
@@ -64,7 +67,7 @@ router.get(
                             createJsonFailureResponseSchema(
                                 createJsonResponseErrorSchema(
                                     z.literal(ResponseErrorCode.TooLarge),
-                                    z.string(),
+                                    z.literal(ResponseErrorMessage.TooLarge),
                                 ),
                             ),
                         ),
@@ -79,7 +82,7 @@ router.get(
                             createJsonFailureResponseSchema(
                                 createJsonResponseErrorSchema(
                                     z.literal(ResponseErrorCode.Server),
-                                    z.string(),
+                                    z.literal(ResponseErrorMessage.Server),
                                 ),
                             ),
                         ),
@@ -94,7 +97,7 @@ router.get(
                             createJsonFailureResponseSchema(
                                 createJsonResponseErrorSchema(
                                     z.literal(ResponseErrorCode.Timeout),
-                                    z.string(),
+                                    z.literal(ResponseErrorMessage.Timeout),
                                 ),
                             ),
                         ),
@@ -178,7 +181,7 @@ router.get(
                             createJsonFailureResponseSchema(
                                 createJsonResponseErrorSchema(
                                     z.literal(ResponseErrorCode.TooLarge),
-                                    z.string(),
+                                    z.literal(ResponseErrorMessage.TooLarge),
                                 ),
                             ),
                         ),
@@ -193,7 +196,7 @@ router.get(
                             createJsonFailureResponseSchema(
                                 createJsonResponseErrorSchema(
                                     z.literal(ResponseErrorCode.Server),
-                                    z.string(),
+                                    z.literal(ResponseErrorMessage.Server),
                                 ),
                             ),
                         ),
@@ -208,7 +211,7 @@ router.get(
                             createJsonFailureResponseSchema(
                                 createJsonResponseErrorSchema(
                                     z.literal(ResponseErrorCode.Timeout),
-                                    z.string(),
+                                    z.literal(ResponseErrorMessage.Timeout),
                                 ),
                             ),
                         ),
