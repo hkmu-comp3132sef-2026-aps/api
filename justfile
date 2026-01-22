@@ -53,6 +53,7 @@ start:
 # Clean builds
 clean:
     rm -rf ./dist
+    rm ./.cache.db
 
 # Clean everything
 clean-all:
