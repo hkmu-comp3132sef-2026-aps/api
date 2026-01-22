@@ -56,6 +56,21 @@ router.get(
                     },
                 },
             },
+            413: {
+                description: "Request body is too large",
+                content: {
+                    "application/json": {
+                        schema: resolver(
+                            createJsonFailureResponseSchema(
+                                createJsonResponseErrorSchema(
+                                    z.literal(ResponseErrorCode.TooLarge),
+                                    z.string(),
+                                ),
+                            ),
+                        ),
+                    },
+                },
+            },
             500: {
                 description: "Server error",
                 content: {
@@ -64,6 +79,21 @@ router.get(
                             createJsonFailureResponseSchema(
                                 createJsonResponseErrorSchema(
                                     z.literal(ResponseErrorCode.Server),
+                                    z.string(),
+                                ),
+                            ),
+                        ),
+                    },
+                },
+            },
+            504: {
+                description: "Request timeout",
+                content: {
+                    "application/json": {
+                        schema: resolver(
+                            createJsonFailureResponseSchema(
+                                createJsonResponseErrorSchema(
+                                    z.literal(ResponseErrorCode.Timeout),
                                     z.string(),
                                 ),
                             ),
@@ -140,6 +170,21 @@ router.get(
                     },
                 },
             },
+            413: {
+                description: "Request body is too large",
+                content: {
+                    "application/json": {
+                        schema: resolver(
+                            createJsonFailureResponseSchema(
+                                createJsonResponseErrorSchema(
+                                    z.literal(ResponseErrorCode.TooLarge),
+                                    z.string(),
+                                ),
+                            ),
+                        ),
+                    },
+                },
+            },
             500: {
                 description: "Server error",
                 content: {
@@ -148,6 +193,21 @@ router.get(
                             createJsonFailureResponseSchema(
                                 createJsonResponseErrorSchema(
                                     z.literal(ResponseErrorCode.Server),
+                                    z.string(),
+                                ),
+                            ),
+                        ),
+                    },
+                },
+            },
+            504: {
+                description: "Request timeout",
+                content: {
+                    "application/json": {
+                        schema: resolver(
+                            createJsonFailureResponseSchema(
+                                createJsonResponseErrorSchema(
+                                    z.literal(ResponseErrorCode.Timeout),
                                     z.string(),
                                 ),
                             ),
