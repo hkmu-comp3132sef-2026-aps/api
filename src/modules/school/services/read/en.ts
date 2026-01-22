@@ -2,12 +2,12 @@ import type { SchoolLang } from "#/modules/school/schemas/langs/_common";
 import type { SchoolEn } from "#/modules/school/schemas/langs/en";
 import type { School } from "#/schema/school";
 
-import { and, eq } from "drizzle-orm";
-
-import { cacheDB } from "#/configs/cache-db";
 import { ServiceError } from "#/lib/errors/service";
 import { schoolSchemaEn } from "#/modules/school/schemas/langs/en";
-import { schools } from "#/schema/school";
+import {
+    selectSchoolByIdAndLang,
+    selectSchoolBySchoolIdAndLang,
+} from "#/modules/school/sql/select";
 
 enum ServiceSchoolReadEnErrorCode {
     NOT_FOUND = "not_found",
@@ -27,24 +27,26 @@ const getErrorMessage = (
 };
 
 type ServiceSchollReadEnOptions = {
-    id: string;
+    id?: string;
+    schoolId?: number;
 };
 
 const serviceSchoolReadEn = async (
     options: ServiceSchollReadEnOptions,
 ): Promise<SchoolEn> => {
-    const prepared = cacheDB
-        .select()
-        .from(schools)
-        .where(
-            and(
-                eq(schools.id, options.id),
-                eq(schools.lang, "en" satisfies SchoolLang),
-            ),
-        )
-        .prepare();
+    let result: School | undefined = void 0;
 
-    const result: School | undefined = (await prepared.execute())[0];
+    if (options.id) {
+        result = await selectSchoolByIdAndLang({
+            id: options.id,
+            lang: "en" satisfies SchoolLang,
+        });
+    } else if (options.schoolId) {
+        result = await selectSchoolBySchoolIdAndLang({
+            schoolId: options.schoolId,
+            lang: "en" satisfies SchoolLang,
+        });
+    }
 
     if (!result) {
         const code: ServiceSchoolReadEnErrorCode =

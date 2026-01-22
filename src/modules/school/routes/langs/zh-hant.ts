@@ -81,11 +81,11 @@ router.get(
 );
 
 router.get(
-    "/:id",
+    "/:schoolId",
     validator(
         "param",
         z.object({
-            id: z.string(),
+            schoolId: z.coerce.number(),
         }),
     ),
     describeRoute({
@@ -158,11 +158,11 @@ router.get(
         },
     }),
     async (c): Promise<Response> => {
-        const { id } = c.req.valid("param");
+        const { schoolId } = c.req.valid("param");
 
         return createJsonResponse({
             data: await serviceSchoolReadZhHant({
-                id,
+                schoolId,
             }),
         });
     },
