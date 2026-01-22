@@ -22,6 +22,12 @@ const selectSchoolsByLang = async (
     return await prepared.execute();
 };
 
+const selectSchools = async (): Promise<School[]> => {
+    const prepared = cacheDB.select().from(schools).prepare();
+
+    return await prepared.execute();
+};
+
 type SelectSchoolByIdAndLangOptions = {
     id: string;
     lang: SchoolLang;
@@ -61,13 +67,32 @@ const selectSchoolBySchoolIdAndLang = async (
     return (await prepared.execute())[0];
 };
 
+type SelectSchoolBySchoolIdOptions = {
+    schoolId: number;
+};
+
+const selectSchoolBySchoolId = async (
+    options: SelectSchoolBySchoolIdOptions,
+): Promise<School | undefined> => {
+    const prepared = cacheDB
+        .select()
+        .from(schools)
+        .where(and(eq(schools.schoolId, options.schoolId)))
+        .prepare();
+
+    return (await prepared.execute())[0];
+};
+
 export type {
     SelectSchoolsByLangOptions,
     SelectSchoolByIdAndLangOptions,
     SelectSchoolBySchoolIdAndLangOptions,
+    SelectSchoolBySchoolIdOptions,
 };
 export {
     selectSchoolsByLang,
+    selectSchools,
     selectSchoolByIdAndLang,
     selectSchoolBySchoolIdAndLang,
+    selectSchoolBySchoolId,
 };

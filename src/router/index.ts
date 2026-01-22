@@ -8,6 +8,7 @@ import { Scalar } from "@scalar/hono-api-reference";
 import { Hono } from "hono";
 
 import { VERSION } from "#/consts/env";
+import { yogaServer } from "#/graphql";
 import { jsonResponseSchema } from "#/lib/schemas/response";
 import { routerInfo } from "#/modules/info/routes";
 import { routerSchool } from "#/modules/school/routes";
@@ -62,5 +63,7 @@ router.get(
         url: OPEN_API_JSON_PATH,
     }),
 );
+
+router.mount("/graphql", yogaServer.fetch);
 
 export { router };
