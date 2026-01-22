@@ -15,7 +15,7 @@ type InsertOrUpdateSchoolBySchoolIdAndLangOptions = {
 
 const insertOrUpdateSchoolBySchoolIdAndLang = async (
     options: InsertOrUpdateSchoolBySchoolIdAndLangOptions,
-) => {
+): Promise<void> => {
     const preparedEn = cacheDB
         .select()
         .from(schools)
