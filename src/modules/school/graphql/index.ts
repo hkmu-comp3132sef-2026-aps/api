@@ -1,11 +1,12 @@
 import type { School } from "#/schema/school";
 
 import { gql } from "#/configs/graphql";
+import { decodeCursor, encodeCursor } from "#/lib/graphql/cursor";
 import { enumsToGqlEnums, gqlEnumToEnum } from "#/lib/graphql/enum";
 import { schoolLang } from "#/modules/school/schemas/langs/_common";
 import {
     selectSchoolBySchoolIdAndLang,
-    selectSchoolsByLang,
+    selectSchoolsByLangAndCursor,
 } from "#/modules/school/sql/select";
 
 const GqlSchoolLang = gql.enumType("SchoolLang", {
@@ -36,30 +37,6 @@ GqlSchool.implement({
     }),
 });
 
-const schoolsField = (
-    t: PothosSchemaTypes.QueryFieldBuilder<
-        PothosSchemaTypes.ExtendDefaultTypes<object>,
-        object
-    >,
-) => {
-    return t.field({
-        type: [
-            GqlSchool,
-        ],
-        args: {
-            lang: t.arg({
-                type: GqlSchoolLang,
-                required: true,
-            }),
-        },
-        resolve: async (_, args): Promise<School[]> => {
-            return await selectSchoolsByLang({
-                lang: gqlEnumToEnum(args.lang),
-            });
-        },
-    });
-};
-
 const schoolField = (
     t: PothosSchemaTypes.QueryFieldBuilder<
         PothosSchemaTypes.ExtendDefaultTypes<object>,
@@ -86,4 +63,76 @@ const schoolField = (
     });
 };
 
-export { schoolsField, schoolField };
+const schoolsConnectionField = (
+    t: PothosSchemaTypes.QueryFieldBuilder<
+        PothosSchemaTypes.ExtendDefaultTypes<object>,
+        object
+    >,
+) => {
+    return t.connection({
+        type: GqlSchool,
+        args: {
+            lang: t.arg({
+                type: GqlSchoolLang,
+                required: true,
+            }),
+        },
+        resolve: async (_, args) => {
+            const isForward: boolean = typeof args.first === "number";
+
+            const rows: School[] = await selectSchoolsByLangAndCursor({
+                lang: gqlEnumToEnum(args.lang),
+                first: args.first ?? void 0,
+                after: args.after ? decodeCursor(args.after) : void 0,
+                last: args.last ?? void 0,
+                before: args.before ? decodeCursor(args.before) : void 0,
+            });
+
+            const limit: number = isForward
+                ? (args.first ?? Number.MAX_SAFE_INTEGER)
+                : (args.last ?? Number.MAX_SAFE_INTEGER);
+
+            const hasExtraRow: boolean = rows.length > limit;
+            const items: School[] = hasExtraRow ? rows.slice(0, limit) : rows;
+
+            if (items.length === 0)
+                return {
+                    edges: [],
+                    pageInfo: {
+                        hasNextPage: false,
+                        hasPreviousPage: false,
+                    },
+                };
+
+            const startCursor: string | null =
+                items.length > 0
+                    ? encodeCursor((items[0] as School).schoolId)
+                    : null;
+
+            const endCursor: string | null =
+                items.length > 0
+                    ? encodeCursor((items[items.length - 1] as School).schoolId)
+                    : null;
+
+            const hasNextPage: boolean =
+                hasExtraRow && items.length < rows.length;
+
+            const hasPreviousPage: boolean = hasExtraRow && items.length > 0;
+
+            return {
+                edges: items.map((school: School) => ({
+                    cursor: encodeCursor(school.schoolId),
+                    node: school,
+                })),
+                pageInfo: {
+                    startCursor,
+                    endCursor,
+                    hasNextPage,
+                    hasPreviousPage,
+                },
+            };
+        },
+    });
+};
+
+export { schoolField, schoolsConnectionField };

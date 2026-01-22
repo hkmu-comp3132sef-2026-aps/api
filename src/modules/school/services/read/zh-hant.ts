@@ -4,10 +4,7 @@ import type { School } from "#/schema/school";
 
 import { ServiceError } from "#/lib/errors/service";
 import { schoolSchemaZhHant } from "#/modules/school/schemas/langs/zh-hant";
-import {
-    selectSchoolByIdAndLang,
-    selectSchoolBySchoolIdAndLang,
-} from "#/modules/school/sql/select";
+import { selectSchoolBySchoolIdAndLang } from "#/modules/school/sql/select";
 
 enum ServiceSchoolReadZhHantErrorCode {
     NOT_FOUND = "not_found",
@@ -27,26 +24,16 @@ const getErrorMessage = (
 };
 
 type ServiceSchollReadZhHantOptions = {
-    id?: string;
-    schoolId?: number;
+    schoolId: number;
 };
 
 const serviceSchoolReadZhHant = async (
     options: ServiceSchollReadZhHantOptions,
 ): Promise<SchoolZhHant> => {
-    let result: School | undefined = void 0;
-
-    if (options.id) {
-        result = await selectSchoolByIdAndLang({
-            id: options.id,
-            lang: "zh-hant" satisfies SchoolLang,
-        });
-    } else if (options.schoolId) {
-        result = await selectSchoolBySchoolIdAndLang({
-            schoolId: options.schoolId,
-            lang: "zh-hant" satisfies SchoolLang,
-        });
-    }
+    const result: School | undefined = await selectSchoolBySchoolIdAndLang({
+        schoolId: options.schoolId,
+        lang: "zh-hant" satisfies SchoolLang,
+    });
 
     if (!result) {
         const code: ServiceSchoolReadZhHantErrorCode =

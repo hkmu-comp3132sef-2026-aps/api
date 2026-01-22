@@ -35,6 +35,9 @@ importers:
       '@pothos/core':
         specifier: ^4.12.0
         version: 4.12.0(graphql@16.12.0)
+      '@pothos/plugin-relay':
+        specifier: ^4.6.2
+        version: 4.6.2(@pothos/core@4.12.0(graphql@16.12.0))(graphql@16.12.0)
       '@scalar/hono-api-reference':
         specifier: ~0.9.34
         version: 0.9.34(hono@4.11.4)
@@ -683,6 +686,12 @@ packages:
   '@pothos/core@4.12.0':
     resolution: {integrity: sha512-PeiODrj3GjQ7Nbs/5p65DEyBWZTSGGjgGO/BgaMEqS1jBNX/2zJTEQJA9zM5uPmCHUCDjE7Qn2U7lOi0ALp/8A==}
     peerDependencies:
+      graphql: ^16.10.0
+
+  '@pothos/plugin-relay@4.6.2':
+    resolution: {integrity: sha512-9aweCv9T53z4+CmE+JF8QoXeAEd+wT/rZflZNzrvH6ln2Lj6qy/EVEcL5BMr6en3/IYHH+ROyHAAsy12t4uIUQ==}
+    peerDependencies:
+      '@pothos/core': '*'
       graphql: ^16.10.0
 
   '@repeaterjs/repeater@3.0.6':
@@ -2002,6 +2011,11 @@ snapshots:
 
   '@pothos/core@4.12.0(graphql@16.12.0)':
     dependencies:
+      graphql: 16.12.0
+
+  '@pothos/plugin-relay@4.6.2(@pothos/core@4.12.0(graphql@16.12.0))(graphql@16.12.0)':
+    dependencies:
+      '@pothos/core': 4.12.0(graphql@16.12.0)
       graphql: 16.12.0
 
   '@repeaterjs/repeater@3.0.6': {}

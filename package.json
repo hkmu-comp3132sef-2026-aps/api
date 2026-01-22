@@ -11,6 +11,7 @@
         "@jderstd/hono-openapi": "~0.2.0",
         "@libsql/client": "~0.17.0",
         "@pothos/core": "^4.12.0",
+        "@pothos/plugin-relay": "^4.6.2",
         "@scalar/hono-api-reference": "~0.9.34",
         "drizzle-kit": "catalog:drizzle",
         "drizzle-orm": "catalog:drizzle",

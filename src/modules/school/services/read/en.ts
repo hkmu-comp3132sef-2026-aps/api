@@ -4,10 +4,7 @@ import type { School } from "#/schema/school";
 
 import { ServiceError } from "#/lib/errors/service";
 import { schoolSchemaEn } from "#/modules/school/schemas/langs/en";
-import {
-    selectSchoolByIdAndLang,
-    selectSchoolBySchoolIdAndLang,
-} from "#/modules/school/sql/select";
+import { selectSchoolBySchoolIdAndLang } from "#/modules/school/sql/select";
 
 enum ServiceSchoolReadEnErrorCode {
     NOT_FOUND = "not_found",
@@ -27,26 +24,16 @@ const getErrorMessage = (
 };
 
 type ServiceSchollReadEnOptions = {
-    id?: string;
-    schoolId?: number;
+    schoolId: number;
 };
 
 const serviceSchoolReadEn = async (
     options: ServiceSchollReadEnOptions,
 ): Promise<SchoolEn> => {
-    let result: School | undefined = void 0;
-
-    if (options.id) {
-        result = await selectSchoolByIdAndLang({
-            id: options.id,
-            lang: "en" satisfies SchoolLang,
-        });
-    } else if (options.schoolId) {
-        result = await selectSchoolBySchoolIdAndLang({
-            schoolId: options.schoolId,
-            lang: "en" satisfies SchoolLang,
-        });
-    }
+    const result: School | undefined = await selectSchoolBySchoolIdAndLang({
+        schoolId: options.schoolId,
+        lang: "en" satisfies SchoolLang,
+    });
 
     if (!result) {
         const code: ServiceSchoolReadEnErrorCode =
