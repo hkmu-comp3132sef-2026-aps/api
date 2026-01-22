@@ -99,11 +99,17 @@ type SchoolZhHant = z.infer<typeof schoolSchemaZhHant>;
 
 export type { SchoolZhHant };
 export {
+    schoolCategoryZhHant,
     schoolCategoryEnumZhHant,
+    schoolStudentsGenderZhHant,
     schoolStudentsGenderEnumZhHant,
+    schoolSessiionZhHant,
     schoolSessionEnumZhHant,
+    schoolDistrictZhHant,
     schoolDistrictEnumZhHant,
+    schoolFinanceTypeZhHant,
     schoolFinanceTypeEnumZhHant,
+    schoolLevelZhHant,
     schoolLevelEnumZhHant,
     schoolSchemaZhHant,
 };

@@ -30,4 +30,4 @@ const schoolSchemaBase = z.object({
 });
 
 export type { SchoolLang };
-export { schoolLangSchema, schoolSchemaBase };
+export { schoolLang, schoolLangSchema, schoolSchemaBase };
