@@ -1,3 +1,4 @@
+import type { GqlQueryFieldBuilder } from "#/@types/graphql";
 import type { School } from "#/schema/school";
 
 import { gql } from "#/configs/graphql";
@@ -37,12 +38,7 @@ GqlSchool.implement({
     }),
 });
 
-const schoolField = (
-    t: PothosSchemaTypes.QueryFieldBuilder<
-        PothosSchemaTypes.ExtendDefaultTypes<object>,
-        object
-    >,
-) => {
+const gqlSchoolField = (t: GqlQueryFieldBuilder) => {
     return t.field({
         type: GqlSchool,
         args: {
@@ -63,12 +59,7 @@ const schoolField = (
     });
 };
 
-const schoolsConnectionField = (
-    t: PothosSchemaTypes.QueryFieldBuilder<
-        PothosSchemaTypes.ExtendDefaultTypes<object>,
-        object
-    >,
-) => {
+const gqlSchoolsConnectionField = (t: GqlQueryFieldBuilder) => {
     return t.connection({
         type: GqlSchool,
         args: {
@@ -135,4 +126,4 @@ const schoolsConnectionField = (
     });
 };
 
-export { schoolField, schoolsConnectionField };
+export { gqlSchoolField, gqlSchoolsConnectionField };
