@@ -60,70 +60,80 @@ const gqlSchoolField = (t: GqlQueryFieldBuilder) => {
 };
 
 const gqlSchoolsConnectionField = (t: GqlQueryFieldBuilder) => {
-    return t.connection({
-        type: GqlSchool,
-        args: {
-            lang: t.arg({
-                type: GqlSchoolLang,
-                required: true,
-            }),
-        },
-        resolve: async (_, args) => {
-            const isForward: boolean = typeof args.first === "number";
+    return t.connection(
+        {
+            type: GqlSchool,
+            args: {
+                lang: t.arg({
+                    type: GqlSchoolLang,
+                    required: true,
+                }),
+            },
+            resolve: async (_, args) => {
+                const isForward: boolean = typeof args.first === "number";
 
-            const rows: School[] = await selectSchoolsByLangAndCursor({
-                lang: gqlEnumToEnum(args.lang),
-                first: args.first ?? void 0,
-                after: args.after ? decodeCursor(args.after) : void 0,
-                last: args.last ?? void 0,
-                before: args.before ? decodeCursor(args.before) : void 0,
-            });
+                const rows: School[] = await selectSchoolsByLangAndCursor({
+                    lang: gqlEnumToEnum(args.lang),
+                    first: args.first ?? void 0,
+                    after: args.after ? decodeCursor(args.after) : void 0,
+                    last: args.last ?? void 0,
+                    before: args.before ? decodeCursor(args.before) : void 0,
+                });
 
-            const limit: number = isForward
-                ? (args.first ?? Number.MAX_SAFE_INTEGER)
-                : (args.last ?? Number.MAX_SAFE_INTEGER);
+                const limit: number = isForward
+                    ? (args.first ?? Number.MAX_SAFE_INTEGER)
+                    : (args.last ?? Number.MAX_SAFE_INTEGER);
 
-            const hasExtraRow: boolean = rows.length > limit;
-            const items: School[] = hasExtraRow ? rows.slice(0, limit) : rows;
+                const hasExtraRow: boolean = rows.length > limit;
+                const items: School[] = hasExtraRow
+                    ? rows.slice(0, limit)
+                    : rows;
 
-            if (items.length === 0)
+                if (items.length === 0)
+                    return {
+                        edges: [],
+                        pageInfo: {
+                            hasNextPage: false,
+                            hasPreviousPage: false,
+                        },
+                    };
+
+                const startCursor: string | null =
+                    items.length > 0
+                        ? encodeCursor((items[0] as School).schoolId)
+                        : null;
+
+                const endCursor: string | null =
+                    items.length > 0
+                        ? encodeCursor(
+                              (items[items.length - 1] as School).schoolId,
+                          )
+                        : null;
+
+                const hasNextPage: boolean =
+                    hasExtraRow && items.length < rows.length;
+
+                const hasPreviousPage: boolean =
+                    hasExtraRow && items.length > 0;
+
                 return {
-                    edges: [],
+                    edges: items.map((school: School) => ({
+                        cursor: encodeCursor(school.schoolId),
+                        node: school,
+                    })),
                     pageInfo: {
-                        hasNextPage: false,
-                        hasPreviousPage: false,
+                        startCursor,
+                        endCursor,
+                        hasNextPage,
+                        hasPreviousPage,
                     },
                 };
-
-            const startCursor: string | null =
-                items.length > 0
-                    ? encodeCursor((items[0] as School).schoolId)
-                    : null;
-
-            const endCursor: string | null =
-                items.length > 0
-                    ? encodeCursor((items[items.length - 1] as School).schoolId)
-                    : null;
-
-            const hasNextPage: boolean =
-                hasExtraRow && items.length < rows.length;
-
-            const hasPreviousPage: boolean = hasExtraRow && items.length > 0;
-
-            return {
-                edges: items.map((school: School) => ({
-                    cursor: encodeCursor(school.schoolId),
-                    node: school,
-                })),
-                pageInfo: {
-                    startCursor,
-                    endCursor,
-                    hasNextPage,
-                    hasPreviousPage,
-                },
-            };
+            },
         },
-    });
+        {
+            name: "SchoolsConnection",
+        },
+    );
 };
 
 export { gqlSchoolField, gqlSchoolsConnectionField };
