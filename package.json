@@ -2,7 +2,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "drizzle-kit push && vite build"
+        "build": "vite build"
     },
     "dependencies": {
         "@escape.tech/graphql-armor-max-tokens": "^2.5.1",

@@ -36,11 +36,15 @@ fmt:
 
 # Preprocess
 pre:
-    ./{{drizzle}} push
+    NODE_ENV=development ./{{drizzle}} push
 
 # Start development server
 dev:
     ./{{vite}}
+
+# Preprocess for production
+pre-prd:
+    NODE_ENV=production ./{{drizzle}} push
 
 # Build for production
 build:
