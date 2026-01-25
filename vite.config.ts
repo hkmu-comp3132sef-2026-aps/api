@@ -5,6 +5,10 @@ import { vitend } from "vitend/vite";
 export default defineConfig({
     plugins: [
         tsconfigPaths(),
-        vitend(),
+        vitend({
+            build: {
+                mode: "vercel",
+            }
+        }),
     ],
 });
