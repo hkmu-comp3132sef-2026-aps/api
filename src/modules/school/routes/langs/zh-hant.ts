@@ -24,6 +24,16 @@ const router: Hono = new Hono();
 
 router.get(
     "/",
+    validator(
+        "query",
+        z.object({
+            search: z.string().optional(),
+            first: z.coerce.number().optional(),
+            after: z.coerce.number().optional(),
+            last: z.coerce.number().optional(),
+            before: z.coerce.number().optional(),
+        }),
+    ),
     describeRoute({
         description:
             "The endpoint for retrieving schools information in Traditional Chinese",
@@ -106,9 +116,17 @@ router.get(
             },
         },
     }),
-    async (): Promise<Response> => {
+    async (c): Promise<Response> => {
+        const { search, first, after, last, before } = c.req.valid("query");
+
         return createJsonResponse({
-            data: await serviceSchoolReadAllZhHant(),
+            data: await serviceSchoolReadAllZhHant({
+                search,
+                first,
+                after,
+                last,
+                before,
+            }),
         });
     },
 );

@@ -5,11 +5,28 @@ import type { School } from "#/schema/school";
 import { z } from "zod";
 
 import { schoolSchemaEn } from "#/modules/school/schemas/langs/en";
-import { selectSchoolsByLang } from "#/modules/school/sql/select";
+import { selectSchoolsWithCursor } from "#/modules/school/sql/select";
 
-const serviceSchoolReadAllEn = async (): Promise<SchoolEn[]> => {
-    const result: School[] = await selectSchoolsByLang({
+type ServiceSchoolReadAllEnOptions = {
+    search?: string;
+    // forward pagination
+    first?: number;
+    after?: number;
+    // backward pagination
+    last?: number;
+    before?: number;
+};
+
+const serviceSchoolReadAllEn = async (
+    options: ServiceSchoolReadAllEnOptions,
+): Promise<SchoolEn[]> => {
+    const result: School[] = await selectSchoolsWithCursor({
         lang: "en" satisfies SchoolLang,
+        search: options.search,
+        first: options.first,
+        after: options.after,
+        last: options.last,
+        before: options.before,
     });
 
     const parsed: SchoolEn[] = await z.array(schoolSchemaEn).parseAsync(result);
@@ -17,4 +34,5 @@ const serviceSchoolReadAllEn = async (): Promise<SchoolEn[]> => {
     return parsed;
 };
 
+export type { ServiceSchoolReadAllEnOptions };
 export { serviceSchoolReadAllEn };
