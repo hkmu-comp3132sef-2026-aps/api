@@ -7,7 +7,7 @@ import { enumsToGqlEnums, gqlEnumToEnum } from "#/lib/graphql/enum";
 import { schoolLang } from "#/modules/school/schemas/langs/_common";
 import {
     selectSchoolBySchoolIdAndLang,
-    selectSchoolsByLangAndCursor,
+    selectSchoolsWithCursor,
 } from "#/modules/school/sql/select";
 
 const GqlSchoolLang = gql.enumType("SchoolLang", {
@@ -68,13 +68,17 @@ const gqlSchoolsConnectionField = (t: GqlQueryFieldBuilder) => {
                     type: GqlSchoolLang,
                     required: true,
                 }),
+                search: t.arg.string({
+                    required: false,
+                }),
             },
             resolve: async (_, args) => {
                 const isForward: boolean = typeof args.first === "number";
                 const isBackward: boolean = typeof args.last === "number";
 
-                const rows: School[] = await selectSchoolsByLangAndCursor({
+                const rows: School[] = await selectSchoolsWithCursor({
                     lang: gqlEnumToEnum(args.lang),
+                    search: args.search ?? void 0,
                     first: args.first ?? void 0,
                     after: args.after ? decodeCursor(args.after) : void 0,
                     last: args.last ?? void 0,

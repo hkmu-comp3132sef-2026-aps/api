@@ -3,7 +3,7 @@ import type { SQL } from "drizzle-orm";
 import type { SchoolLang } from "#/modules/school/schemas/langs/_common";
 import type { School } from "#/schema/school";
 
-import { and, asc, desc, eq, gt, lt } from "drizzle-orm";
+import { and, asc, desc, eq, gt, like, lt, sql } from "drizzle-orm";
 
 import { cacheDB } from "#/configs/cache-db";
 import { schools } from "#/schema/school";
@@ -46,8 +46,9 @@ const selectSchoolsByLang = async (
     return await prepared.execute();
 };
 
-type SelectSchoolsByLangAndCursorOptions = {
+type SelectSchoolsWithCursorOptions = {
     lang: SchoolLang;
+    search?: string;
     // forward pagination
     first?: number;
     after?: number;
@@ -56,13 +57,14 @@ type SelectSchoolsByLangAndCursorOptions = {
     before?: number;
 };
 
-const selectSchoolsByLangAndCursor = async ({
+const selectSchoolsWithCursor = async ({
     lang,
+    search,
     first,
     after,
     last,
     before,
-}: SelectSchoolsByLangAndCursorOptions): Promise<School[]> => {
+}: SelectSchoolsWithCursorOptions): Promise<School[]> => {
     const isForward: boolean = typeof first === "number";
     const isBackward: boolean = typeof last === "number";
     const isUnpaginated: boolean = !isForward && !isBackward;
@@ -76,10 +78,17 @@ const selectSchoolsByLangAndCursor = async ({
               ? lt(schools.schoolId, before)
               : void 0;
 
-    const whereCondition: SQL<unknown> | undefined =
-        cursorCondition !== void 0
-            ? and(eq(schools.lang, lang), cursorCondition)
-            : eq(schools.lang, lang);
+    const searchCondition: SQL<unknown> | undefined =
+        search && search.trim().length > 0
+            ? // ilike approach for SQLite
+              like(sql`lower(${schools.name})`, `%${search.toLowerCase()}%`)
+            : void 0;
+
+    const whereCondition: SQL<unknown> | undefined = and(
+        eq(schools.lang, lang),
+        cursorCondition,
+        searchCondition,
+    );
 
     const orderBy: SQL<unknown> = isBackward
         ? desc(schools.schoolId)
@@ -106,12 +115,12 @@ export type {
     SelectSchoolBySchoolIdAndLangOptions,
     // schools
     SelectSchoolsByLangOptions,
-    SelectSchoolsByLangAndCursorOptions,
+    SelectSchoolsWithCursorOptions,
 };
 export {
     // school
     selectSchoolBySchoolIdAndLang,
     // schools
     selectSchoolsByLang,
-    selectSchoolsByLangAndCursor,
+    selectSchoolsWithCursor,
 };
