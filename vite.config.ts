@@ -8,7 +8,7 @@ export default defineConfig({
         vitend({
             build: {
                 mode: "vercel",
-            }
+            },
         }),
     ],
 });

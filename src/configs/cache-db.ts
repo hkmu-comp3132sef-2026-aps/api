@@ -3,17 +3,18 @@ import type { Client } from "@libsql/client";
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
 
-import { PATH_CACHE_DB } from "#/consts/path";
+import { DATABASE_TOKEN, DATABASE_URL } from "#/consts/db";
 
 const client: Client = createClient({
-    url: `file:${PATH_CACHE_DB}`,
+    url: DATABASE_URL,
+    authToken: DATABASE_TOKEN,
 });
 
-const cacheDB = drizzle({
+const db = drizzle({
     client,
 });
 
-type CacheDB = typeof cacheDB;
+type DB = typeof db;
 
-export type { CacheDB };
-export { cacheDB };
+export type { DB };
+export { db };

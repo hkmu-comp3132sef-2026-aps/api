@@ -5,7 +5,7 @@ import type { School } from "#/schema/school";
 
 import { and, asc, desc, eq, gt, like, lt, sql } from "drizzle-orm";
 
-import { cacheDB } from "#/configs/cache-db";
+import { db } from "#/configs/cache-db";
 import { schools } from "#/schema/school";
 
 type SelectSchoolBySchoolIdAndLangOptions = {
@@ -16,7 +16,7 @@ type SelectSchoolBySchoolIdAndLangOptions = {
 const selectSchoolBySchoolIdAndLang = async (
     options: SelectSchoolBySchoolIdAndLangOptions,
 ): Promise<School | undefined> => {
-    const prepared = cacheDB
+    const prepared = db
         .select()
         .from(schools)
         .where(
@@ -78,7 +78,7 @@ const selectSchoolsWithCursor = async ({
         ? desc(schools.schoolId)
         : asc(schools.schoolId);
 
-    const query = cacheDB
+    const query = db
         .select()
         .from(schools)
         .where(whereCondition)
