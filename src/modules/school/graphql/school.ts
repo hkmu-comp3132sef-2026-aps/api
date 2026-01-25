@@ -18,16 +18,16 @@ const GqlSchool = gql.objectRef<School>("School");
 
 GqlSchool.implement({
     fields: (t) => ({
-        id: t.exposeString("id"),
+        id: t.exposeID("id"),
         lang: t.exposeString("lang"),
-        schoolId: t.exposeInt("schoolId"),
+        schoolId: t.exposeID("schoolId"),
         category: t.exposeString("category"),
         name: t.exposeString("name"),
         address: t.exposeString("address"),
         longitude: t.exposeFloat("longitude"),
         latitude: t.exposeFloat("latitude"),
-        easting: t.exposeInt("easting"),
-        northing: t.exposeInt("northing"),
+        easting: t.exposeFloat("easting"),
+        northing: t.exposeFloat("northing"),
         studentsGender: t.exposeString("studentsGender"),
         session: t.exposeString("session"),
         district: t.exposeString("district"),

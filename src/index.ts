@@ -1,11 +1,10 @@
 import { serveStatic } from "@hono/node-server/serve-static";
-import { bodyLimit } from "@jderstd/hono/body-limit";
 import { notFoundHandler } from "@jderstd/hono/not-found";
-import { timeLimit } from "@jderstd/hono/time-limit";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 
 import { PATH_PUBLIC } from "#/consts/path";
+import { yogaServer } from "#/graphql";
 import { onErrorHandler } from "#/middlewares/on-error";
 import { router } from "#/router";
 
@@ -20,19 +19,9 @@ app.use(
     }),
 );
 
-app.use(
-    bodyLimit({
-        max: 10 * 1024 * 1024,
-    }),
-);
-
-app.use(
-    timeLimit({
-        max: 10 * 1000,
-    }),
-);
-
 app.route("/", router);
+
+app.mount("/graphql", yogaServer.fetch);
 
 app.use(
     "/*",

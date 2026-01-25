@@ -1,5 +1,6 @@
 import type { YogaServerInstance } from "graphql-yoga";
 
+import { maxTokensPlugin } from "@escape.tech/graphql-armor-max-tokens";
 import { createYoga } from "graphql-yoga";
 
 import { gql } from "#/configs/graphql";
@@ -22,6 +23,11 @@ gql.queryType({
 const yogaServer: YogaServerInstance<object, object> = createYoga({
     schema: gql.toSchema(),
     graphqlEndpoint: "/",
+    plugins: [
+        maxTokensPlugin({
+            n: 1000,
+        }),
+    ],
 });
 
 export { yogaServer };

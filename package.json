@@ -6,6 +6,7 @@
         "start": "drizzle-kit push && node ./dist/index.js"
     },
     "dependencies": {
+        "@escape.tech/graphql-armor-max-tokens": "^2.5.1",
         "@hono/node-server": "^1.19.9",
         "@jderstd/hono": "~0.8.2",
         "@jderstd/hono-openapi": "~0.2.0",

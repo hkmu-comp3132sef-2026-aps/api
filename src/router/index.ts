@@ -1,4 +1,6 @@
+import { bodyLimit } from "@jderstd/hono/body-limit";
 import { createJsonResponse } from "@jderstd/hono/response";
+import { timeLimit } from "@jderstd/hono/time-limit";
 import {
     describeRoute,
     openAPIRouteHandler,
@@ -8,7 +10,6 @@ import { Scalar } from "@scalar/hono-api-reference";
 import { Hono } from "hono";
 
 import { VERSION } from "#/consts/env";
-import { yogaServer } from "#/graphql";
 import { jsonResponseSchema } from "#/lib/schemas/response";
 import { routerInfo } from "#/modules/info/routes";
 import { routerSchool } from "#/modules/school/routes";
@@ -16,6 +17,18 @@ import { routerSchool } from "#/modules/school/routes";
 const OPEN_API_JSON_PATH = "/openapi.json" as const;
 
 const router: Hono = new Hono();
+
+router.use(
+    bodyLimit({
+        max: 5 * 1024 * 1024,
+    }),
+);
+
+router.use(
+    timeLimit({
+        max: 10 * 1000,
+    }),
+);
 
 router.get(
     "/",
@@ -63,7 +76,5 @@ router.get(
         url: OPEN_API_JSON_PATH,
     }),
 );
-
-router.mount("/graphql", yogaServer.fetch);
 
 export { router };
