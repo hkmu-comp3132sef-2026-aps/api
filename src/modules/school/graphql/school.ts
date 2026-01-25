@@ -71,6 +71,7 @@ const gqlSchoolsConnectionField = (t: GqlQueryFieldBuilder) => {
             },
             resolve: async (_, args) => {
                 const isForward: boolean = typeof args.first === "number";
+                const isBackward: boolean = typeof args.last === "number";
 
                 const rows: School[] = await selectSchoolsByLangAndCursor({
                     lang: gqlEnumToEnum(args.lang),
@@ -82,9 +83,12 @@ const gqlSchoolsConnectionField = (t: GqlQueryFieldBuilder) => {
 
                 const limit: number = isForward
                     ? (args.first ?? Number.MAX_SAFE_INTEGER)
-                    : (args.last ?? Number.MAX_SAFE_INTEGER);
+                    : isBackward
+                      ? (args.last ?? Number.MAX_SAFE_INTEGER)
+                      : Number.MAX_SAFE_INTEGER;
 
                 const hasExtraRow: boolean = rows.length > limit;
+
                 const items: School[] = hasExtraRow
                     ? rows.slice(0, limit)
                     : rows;
@@ -98,17 +102,17 @@ const gqlSchoolsConnectionField = (t: GqlQueryFieldBuilder) => {
                         },
                     };
 
-                const startCursor: string | null =
+                const startCursor: string | undefined =
                     items.length > 0
                         ? encodeCursor((items[0] as School).schoolId)
-                        : null;
+                        : void 0;
 
-                const endCursor: string | null =
+                const endCursor: string | undefined =
                     items.length > 0
                         ? encodeCursor(
                               (items[items.length - 1] as School).schoolId,
                           )
-                        : null;
+                        : void 0;
 
                 const hasNextPage: boolean =
                     hasExtraRow && items.length < rows.length;
