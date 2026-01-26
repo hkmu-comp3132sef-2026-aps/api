@@ -39,6 +39,10 @@ dev:
     NODE_ENV=development ./{{drizzle}} push --force
     ./{{vite}}
 
+# Preprocess
+pre:
+    NODE_ENV=production ./{{drizzle}} push --force
+
 # Build for production
 build:
     NODE_ENV=production ./{{drizzle}} push --force

@@ -2,7 +2,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "NODE_ENV=production drizzle-kit push --force && vite build"
+        "build": "vite build"
     },
     "dependencies": {
         "@escape.tech/graphql-armor-max-tokens": "^2.5.1",
