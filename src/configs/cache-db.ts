@@ -3,18 +3,27 @@ import type { Client } from "@libsql/client";
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
 
-import { DATABASE_TOKEN, DATABASE_URL } from "#/consts/db";
+import { RDB_TOKEN, RDB_URL, WDB_TOKEN, WDB_URL } from "#/consts/db";
 
-const client: Client = createClient({
-    url: DATABASE_URL,
-    authToken: DATABASE_TOKEN,
+const readClient: Client = createClient({
+    url: RDB_URL,
+    authToken: RDB_TOKEN,
 });
 
-const db = drizzle({
-    client,
+const readDB = drizzle({
+    client: readClient,
 });
 
-type DB = typeof db;
+const writeClient: Client = createClient({
+    url: WDB_URL,
+    authToken: WDB_TOKEN,
+});
+
+const writeDB = drizzle({
+    client: writeClient,
+});
+
+type DB = typeof readDB;
 
 export type { DB };
-export { db };
+export { readDB, writeDB };

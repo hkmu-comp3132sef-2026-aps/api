@@ -1,9 +1,17 @@
 import { defineConfig } from "drizzle-kit";
 import { loadEnv } from "vite";
 
-import { DATABASE_LOCAL, DATABASE_TOKEN } from "./src/consts/db";
+import { DATABASE_LOCAL, WDB_TOKEN } from "./src/consts/db";
 
-const env: Record<string, string> = loadEnv(
+type MetaEnv = {
+    readonly VITE_VERSION?: string;
+    readonly VITE_RDB_URL?: string;
+    readonly VITE_RDB_TOKEN?: string;
+    readonly VITE_WDB_URL?: string;
+    readonly VITE_WDB_TOKEN?: string;
+};
+
+const env: MetaEnv = loadEnv(
     process.env.NODE_ENV ?? "development",
     process.cwd(),
 );
@@ -14,7 +22,7 @@ export default defineConfig({
         "./src/schema/school.ts",
     ],
     dbCredentials: {
-        url: env.VITE_DATABASE_URL ?? DATABASE_LOCAL,
-        authToken: env.VITE_DATABASE_TOKEN ?? DATABASE_TOKEN,
+        url: env.VITE_WDB_URL ?? DATABASE_LOCAL,
+        authToken: env.VITE_WDB_TOKEN ?? WDB_TOKEN,
     },
 });

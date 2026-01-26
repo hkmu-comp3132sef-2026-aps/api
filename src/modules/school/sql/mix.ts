@@ -4,7 +4,7 @@ import type { SchoolLang } from "#/modules/school/schemas/langs/_common";
 
 import { and, eq } from "drizzle-orm";
 
-import { db } from "#/configs/cache-db";
+import { readDB, writeDB } from "#/configs/cache-db";
 import { type School, schools } from "#/schema/school";
 
 const isSameData = <T extends Record<string, unknown>>(
@@ -39,7 +39,7 @@ type InsertOrUpdateSchoolBySchoolIdAndLangOptions = {
 const insertOrUpdateSchoolBySchoolIdAndLang = async (
     options: InsertOrUpdateSchoolBySchoolIdAndLangOptions,
 ): Promise<void> => {
-    const preparedEn = db
+    const preparedEn = readDB
         .select()
         .from(schools)
         .where(
@@ -56,7 +56,7 @@ const insertOrUpdateSchoolBySchoolIdAndLang = async (
     if (current) {
         if (isSameData(current, options.data)) return void 0;
 
-        await db
+        await writeDB
             .update(schools)
             .set(options.data)
             .where(
@@ -67,7 +67,7 @@ const insertOrUpdateSchoolBySchoolIdAndLang = async (
             )
             .execute();
     } else {
-        await db
+        await writeDB
             .insert(schools)
             .values({
                 ...options.data,
