@@ -34,20 +34,14 @@ lint:
 fmt:
     ./{{biome}} check --write .
 
-# Preprocess
-pre:
-    NODE_ENV=development ./{{drizzle}} push
-
 # Start development server
 dev:
+    NODE_ENV=development ./{{drizzle}} push --force
     ./{{vite}}
-
-# Preprocess for production
-pre-prd:
-    NODE_ENV=production ./{{drizzle}} push
 
 # Build for production
 build:
+    NODE_ENV=production ./{{drizzle}} push --force
     ./{{vite}} build
 
 # Production preview

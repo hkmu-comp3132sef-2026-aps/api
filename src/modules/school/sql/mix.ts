@@ -7,13 +7,27 @@ import { and, eq } from "drizzle-orm";
 import { db } from "#/configs/cache-db";
 import { type School, schools } from "#/schema/school";
 
-const isSameData = (
-    current: School,
-    next: InsertOrUpdateSchoolBySchoolIdAndLangOptions["data"],
+const isSameData = <T extends Record<string, unknown>>(
+    current: T,
+    next: Partial<T>,
 ): boolean => {
-    return (Object.keys(next) as Array<keyof typeof next>).every((key) =>
-        Object.is(current[key], next[key]),
-    );
+    for (let i: number = 0; i < Object.keys(next).length; i++) {
+        const key: keyof T = Object.keys(next)[i] as keyof T;
+
+        if (current[key] !== next[key]) {
+            console.log(
+                "Difference found in key:",
+                key,
+                "Current:",
+                current[key],
+                "Next:",
+                next[key],
+            );
+            return false;
+        }
+    }
+
+    return true;
 };
 
 type InsertOrUpdateSchoolBySchoolIdAndLangOptions = {
