@@ -7,7 +7,7 @@ export default defineConfig({
         tsconfigPaths(),
         vitend({
             build: {
-                mode: "vercel",
+                target: "vercel",
             },
         }),
     ],

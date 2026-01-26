@@ -69,8 +69,8 @@ importers:
         specifier: ^13.0.0
         version: 13.0.0
       vitend:
-        specifier: 0.0.0-dev.20260125.f95058a
-        version: 0.0.0-dev.20260125.f95058a(vite@8.0.0-beta.8(@types/node@25.0.9)(esbuild@0.27.2)(tsx@4.21.0))
+        specifier: ~0.2.0
+        version: 0.2.0(vite@8.0.0-beta.8(@types/node@25.0.9)(esbuild@0.27.2)(tsx@4.21.0))
       zod:
         specifier: ^4.3.5
         version: 4.3.5
@@ -1532,8 +1532,8 @@ packages:
       yaml:
         optional: true
 
-  vitend@0.0.0-dev.20260125.f95058a:
-    resolution: {integrity: sha512-lNBs1A47AAppFgclIytp0lF/r8NFWektPHFvBd2a2+FNIauwRuP/I8FVaj3EUeQqtqYGGphu43B1wEi6jbOyQg==}
+  vitend@0.2.0:
+    resolution: {integrity: sha512-zj6hjP6HVmKcXN4DkGG+f1w6ILgw4l7F8VA3+9eQgSp+hWDDnwCARQwpqRZ9hNqXlboVqR+W+lImS99+pBm9Xg==}
     peerDependencies:
       vite: 8.0.0-beta.8
 
@@ -2665,7 +2665,7 @@ snapshots:
       fsevents: 2.3.3
       tsx: 4.21.0
 
-  vitend@0.0.0-dev.20260125.f95058a(vite@8.0.0-beta.8(@types/node@25.0.9)(esbuild@0.27.2)(tsx@4.21.0)):
+  vitend@0.2.0(vite@8.0.0-beta.8(@types/node@25.0.9)(esbuild@0.27.2)(tsx@4.21.0)):
     dependencies:
       es-toolkit: 1.44.0
       rollup-plugin-copy: 3.5.0
