@@ -2,8 +2,8 @@ catalogs:
     vite:
         vite: 8.0.0-beta.8
     drizzle:
-        drizzle-kit: 1.0.0-beta.11-05230d9
-        drizzle-orm: 1.0.0-beta.11-05230d9
+        drizzle-kit: 1.0.0-beta.12-a5629fb
+        drizzle-orm: 1.0.0-beta.12-a5629fb
 
 minimumReleaseAge: 1440
 

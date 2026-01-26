@@ -1,82 +1,38 @@
-import type { Omit } from "ts-vista";
-
-import type { SchoolLang } from "#/modules/school/schemas/langs/_common";
+import type { PlanUpsertSchoolsResult } from "#/modules/school/sql/select";
 
 import { and, eq } from "drizzle-orm";
 
-import { readDB, writeDB } from "#/configs/cache-db";
-import { type School, schools } from "#/schema/school";
-
-const isSameData = <T extends Record<string, unknown>>(
-    current: T,
-    next: Partial<T>,
-): boolean => {
-    for (let i: number = 0; i < Object.keys(next).length; i++) {
-        const key: keyof T = Object.keys(next)[i] as keyof T;
-
-        if (current[key] !== next[key]) {
-            console.log(
-                "Difference found in key:",
-                key,
-                "Current:",
-                current[key],
-                "Next:",
-                next[key],
-            );
-            return false;
-        }
-    }
-
-    return true;
-};
-
-type InsertOrUpdateSchoolBySchoolIdAndLangOptions = {
-    schoolId: number;
-    lang: SchoolLang;
-    data: Omit<School, "id" | "lang" | "schoolId">;
-};
+import { writeDB } from "#/configs/cache-db";
+import { schools } from "#/schema/school";
 
 const insertOrUpdateSchoolBySchoolIdAndLang = async (
-    options: InsertOrUpdateSchoolBySchoolIdAndLangOptions,
+    options: PlanUpsertSchoolsResult[],
 ): Promise<void> => {
-    const preparedEn = readDB
-        .select()
-        .from(schools)
-        .where(
-            and(
-                eq(schools.schoolId, options.schoolId),
-                eq(schools.lang, options.lang),
-            ),
-        )
-        .limit(1)
-        .prepare();
-
-    const current: School | undefined = (await preparedEn.execute())[0];
-
-    if (current) {
-        if (isSameData(current, options.data)) return void 0;
-
-        await writeDB
-            .update(schools)
-            .set(options.data)
-            .where(
-                and(
-                    eq(schools.schoolId, options.schoolId),
-                    eq(schools.lang, options.lang),
-                ),
-            )
-            .execute();
-    } else {
-        await writeDB
-            .insert(schools)
-            .values({
-                ...options.data,
-                lang: options.lang,
-                schoolId: options.schoolId,
-            })
-            .execute();
-    }
+    await writeDB.transaction(async (tx) => {
+        await Promise.all(
+            options.map((option) => {
+                if (option.type === "insert") {
+                    return tx.insert(schools).values({
+                        ...option.data,
+                        lang: option.lang,
+                        schoolId: option.schoolId,
+                    });
+                } else if (option.type === "update") {
+                    return tx
+                        .update(schools)
+                        .set(option.data)
+                        .where(
+                            and(
+                                eq(schools.schoolId, option.schoolId),
+                                eq(schools.lang, option.lang),
+                            ),
+                        );
+                } else {
+                    return Promise.resolve();
+                }
+            }),
+        );
+    });
 };
 
-export type { InsertOrUpdateSchoolBySchoolIdAndLangOptions };
 export { insertOrUpdateSchoolBySchoolIdAndLang };

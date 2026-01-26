@@ -7,11 +7,11 @@ settings:
 catalogs:
   drizzle:
     drizzle-kit:
-      specifier: 1.0.0-beta.11-05230d9
-      version: 1.0.0-beta.11-05230d9
+      specifier: 1.0.0-beta.12-a5629fb
+      version: 1.0.0-beta.12-a5629fb
     drizzle-orm:
-      specifier: 1.0.0-beta.11-05230d9
-      version: 1.0.0-beta.11-05230d9
+      specifier: 1.0.0-beta.12-a5629fb
+      version: 1.0.0-beta.12-a5629fb
 
 overrides:
   vite: 8.0.0-beta.8
@@ -46,10 +46,10 @@ importers:
         version: 0.9.34(hono@4.11.4)
       drizzle-kit:
         specifier: catalog:drizzle
-        version: 1.0.0-beta.11-05230d9
+        version: 1.0.0-beta.12-a5629fb
       drizzle-orm:
         specifier: catalog:drizzle
-        version: 1.0.0-beta.11-05230d9(@libsql/client@0.17.0)
+        version: 1.0.0-beta.12-a5629fb(@libsql/client@0.17.0)
       graphql:
         specifier: ^16.12.0
         version: 16.12.0
@@ -974,12 +974,12 @@ packages:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
     engines: {node: '>=8'}
 
-  drizzle-kit@1.0.0-beta.11-05230d9:
-    resolution: {integrity: sha512-dIv1Ql5SOJsGE/6mzfUk2k8iQFQtP6Buq7JlRew/Mx1uOOkIgyPT6xAUsSbyXqjqiDQl9k2S7iXtKaOs3Cs4aw==}
+  drizzle-kit@1.0.0-beta.12-a5629fb:
+    resolution: {integrity: sha512-l+p4QOMvPGYBYEE9NBlU7diu+NSlxuOUwi0I7i01Uj1PpfU0NxhPzaks/9q1MDw4FAPP8vdD0dOhoqosKtRWWQ==}
     hasBin: true
 
-  drizzle-orm@1.0.0-beta.11-05230d9:
-    resolution: {integrity: sha512-y6i3AgHqeT5Eu/+7hsF1AWyPZQTxiBx1UOy4snEqljW7Fbpp/fO2zmWYFPvjngwOLq9prrbrn36AwCoTR+J2Bg==}
+  drizzle-orm@1.0.0-beta.12-a5629fb:
+    resolution: {integrity: sha512-wyOAgr9Cy9oEN6z5S0JGhfipLKbRRJtQKgbDO9SXGR9swMBbGNIlXkeMqPRrqYQ8k70mh+7ZJ/eVmJ2F7zR3Vg==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=4'
@@ -2227,14 +2227,14 @@ snapshots:
     dependencies:
       path-type: 4.0.0
 
-  drizzle-kit@1.0.0-beta.11-05230d9:
+  drizzle-kit@1.0.0-beta.12-a5629fb:
     dependencies:
       '@drizzle-team/brocli': 0.11.0
       '@js-temporal/polyfill': 0.5.1
       esbuild: 0.25.12
       tsx: 4.21.0
 
-  drizzle-orm@1.0.0-beta.11-05230d9(@libsql/client@0.17.0):
+  drizzle-orm@1.0.0-beta.12-a5629fb(@libsql/client@0.17.0):
     optionalDependencies:
       '@libsql/client': 0.17.0
 
