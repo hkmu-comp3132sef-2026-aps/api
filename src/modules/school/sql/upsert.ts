@@ -3,7 +3,7 @@ import type { AnyBulkWriteOperation } from "mongodb";
 import type { School } from "#/modules/school/schemas/mongo";
 import type { SchoolLang } from "#/modules/school/schemas/zod/langs/_common";
 
-import { school } from "#/modules/school/schemas/mongo";
+import { schools } from "#/modules/school/schemas/mongo";
 
 type InsertSchoolPlan = {
     type: "insert";
@@ -60,7 +60,7 @@ const upsertSchoolsByPlans = async (
 
     if (result.length === 0) return void 0;
 
-    await school.bulkWrite(result);
+    await schools.bulkWrite(result);
 };
 
 export type { UpsertSchoolPlan };

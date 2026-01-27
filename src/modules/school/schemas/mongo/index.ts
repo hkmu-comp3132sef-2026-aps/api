@@ -2,7 +2,7 @@ import type { Collection } from "mongodb";
 
 import { db } from "#/configs/database";
 
-const COLLECTION_NAME: string = "school" as const;
+const COLLECTION_NAME: string = "schools" as const;
 
 type School = {
     lang: "en" | "zh-hant";
@@ -23,7 +23,7 @@ type School = {
     fax: string;
 };
 
-const school: Collection<School> = db.collection<School>(COLLECTION_NAME);
+const schools: Collection<School> = db.collection<School>(COLLECTION_NAME);
 
 export type { School };
-export { school };
+export { schools };

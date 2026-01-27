@@ -3,7 +3,7 @@ import type { FindCursor, WithId } from "mongodb";
 import type { School } from "#/modules/school/schemas/mongo";
 import type { SchoolLang } from "#/modules/school/schemas/zod/langs/_common";
 
-import { school } from "#/modules/school/schemas/mongo";
+import { schools } from "#/modules/school/schemas/mongo";
 
 type SelectSchoolBySchoolIdAndLangOptions = {
     schoolId: number;
@@ -13,7 +13,7 @@ type SelectSchoolBySchoolIdAndLangOptions = {
 const selectSchoolBySchoolIdAndLang = async (
     options: SelectSchoolBySchoolIdAndLangOptions,
 ): Promise<School | undefined> => {
-    const query: School | null = await school.findOne({
+    const query: School | null = await schools.findOne({
         schoolId: options.schoolId,
         lang: options.lang,
     });
@@ -46,7 +46,7 @@ const selectSchoolsWithCursor = async ({
 
     if (isForward && isBackward) return [];
 
-    const cursor: FindCursor<WithId<School>> = school
+    const cursor: FindCursor<WithId<School>> = schools
         .find({
             lang,
             ...(isForward &&
@@ -87,7 +87,7 @@ const selectSchoolsWithCursor = async ({
 };
 
 const selectSchools = async (): Promise<School[]> => {
-    const rows: School[] = await school.find({}).toArray();
+    const rows: School[] = await schools.find({}).toArray();
     return rows;
 };
 
