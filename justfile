@@ -5,7 +5,6 @@ node_bin := "node_modules/.bin/"
 tsc := node_bin + "tsc"
 biome := node_bin + "biome"
 vite := node_bin + "vite"
-drizzle := node_bin + "drizzle-kit"
 
 # Default action
 _:
@@ -36,16 +35,10 @@ fmt:
 
 # Start development server
 dev:
-    NODE_ENV=development ./{{drizzle}} push --force
     ./{{vite}}
-
-# Preprocess
-pre:
-    NODE_ENV=production ./{{drizzle}} push --force
 
 # Build for production
 build:
-    NODE_ENV=production ./{{drizzle}} push --force
     ./{{vite}} build
 
 # Production preview

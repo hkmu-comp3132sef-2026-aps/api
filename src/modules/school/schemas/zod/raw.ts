@@ -7,7 +7,7 @@ import {
     schoolLevelEnumEn,
     schoolSessionEnumEn,
     schoolStudentsGenderEnumEn,
-} from "#/modules/school/schemas/langs/en";
+} from "#/modules/school/schemas/zod/langs/en";
 import {
     schoolCategoryEnumZhHant,
     schoolDistrictEnumZhHant,
@@ -15,7 +15,7 @@ import {
     schoolLevelEnumZhHant,
     schoolSessionEnumZhHant,
     schoolStudentsGenderEnumZhHant,
-} from "#/modules/school/schemas/langs/zh-hant";
+} from "#/modules/school/schemas/zod/langs/zh-hant";
 
 const schoolSchemaRaw = z.object({
     "SCHOOL NO.": z.number(),

@@ -12,7 +12,7 @@ import {
     createJsonResponseErrorSchema,
     createJsonSuccessResponseSchema,
 } from "#/lib/schemas/response";
-import { schoolSchemaEn } from "#/modules/school/schemas/langs/en";
+import { schoolSchemaEn } from "#/modules/school/schemas/zod/langs/en";
 import {
     ServiceSchoolReadEnErrorCode,
     ServiceSchoolReadEnErrorMessage,

@@ -1,10 +1,10 @@
 import type { GqlQueryFieldBuilder } from "#/@types/graphql";
-import type { School } from "#/schema/school";
+import type { School } from "#/modules/school/schemas/mongo";
 
 import { gql } from "#/configs/graphql";
 import { decodeCursor, encodeCursor } from "#/lib/graphql/cursor";
 import { enumsToGqlEnums, gqlEnumToEnum } from "#/lib/graphql/enum";
-import { schoolLang } from "#/modules/school/schemas/langs/_common";
+import { schoolLang } from "#/modules/school/schemas/zod/langs/_common";
 import {
     selectSchoolBySchoolIdAndLang,
     selectSchoolsWithCursor,
@@ -18,9 +18,8 @@ const GqlSchool = gql.objectRef<School>("School");
 
 GqlSchool.implement({
     fields: (t) => ({
-        id: t.exposeID("id"),
-        lang: t.exposeString("lang"),
         schoolId: t.exposeID("schoolId"),
+        lang: t.exposeString("lang"),
         category: t.exposeString("category"),
         name: t.exposeString("name"),
         address: t.exposeString("address"),

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { schoolSchemaBase } from "#/modules/school/schemas/langs/_common";
+import { schoolSchemaBase } from "#/modules/school/schemas/zod/langs/_common";
 
 const schoolCategoryZhHant = [
     "資助小學",

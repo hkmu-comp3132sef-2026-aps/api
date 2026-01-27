@@ -1,10 +1,10 @@
-import type { SchoolLang } from "#/modules/school/schemas/langs/_common";
-import type { SchoolEn } from "#/modules/school/schemas/langs/en";
-import type { School } from "#/schema/school";
+import type { School } from "#/modules/school/schemas/mongo";
+import type { SchoolLang } from "#/modules/school/schemas/zod/langs/_common";
+import type { SchoolEn } from "#/modules/school/schemas/zod/langs/en";
 
 import { z } from "zod";
 
-import { schoolSchemaEn } from "#/modules/school/schemas/langs/en";
+import { schoolSchemaEn } from "#/modules/school/schemas/zod/langs/en";
 import { selectSchoolsWithCursor } from "#/modules/school/sql/select";
 
 type ServiceSchoolReadAllEnOptions = {

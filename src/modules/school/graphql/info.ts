@@ -1,5 +1,5 @@
 import type { GqlQueryFieldBuilder } from "#/@types/graphql";
-import type { SchoolInfo } from "#/modules/school/schemas/info";
+import type { SchoolInfo } from "#/modules/school/schemas/zod/info";
 
 import { gql } from "#/configs/graphql";
 import { serviceSchoolInfo } from "#/modules/school/services/info";

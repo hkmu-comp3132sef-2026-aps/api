@@ -1,4 +1,4 @@
-import type { SchoolInfo } from "#/modules/school/schemas/info";
+import type { SchoolInfo } from "#/modules/school/schemas/zod/info";
 
 import { schoolInfoStore } from "#/modules/school/stores/info";
 
