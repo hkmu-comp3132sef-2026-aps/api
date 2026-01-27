@@ -5,7 +5,7 @@ import { routerSchoolInfo } from "#/modules/school/routes/info";
 import { routerSchoolEn } from "#/modules/school/routes/langs/en";
 import { routerSchoolZhHant } from "#/modules/school/routes/langs/zh-hant";
 
-await startFetchSchoolCron();
+startFetchSchoolCron();
 
 const router: Hono = new Hono();
 

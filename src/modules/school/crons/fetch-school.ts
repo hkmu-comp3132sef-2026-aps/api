@@ -44,9 +44,9 @@ type PlanUpsertSchoolsOptions = {
     data: Omit<School, "id" | "lang" | "schoolId">;
 };
 
-const buildUpsertSchoolsPlan = async (
+const buildUpsertSchoolsPlan = (
     options: PlanUpsertSchoolsOptions,
-): Promise<UpsertSchoolPlan | undefined> => {
+): UpsertSchoolPlan | undefined => {
     const current: School | undefined = options.schools.find(
         (school: School): boolean => {
             return (
@@ -105,35 +105,34 @@ const fetchSchool = async (): Promise<void> => {
 
         // en
 
-        const planEn: UpsertSchoolPlan | undefined =
-            await buildUpsertSchoolsPlan({
-                schools,
-                schoolId: data["SCHOOL NO."],
-                lang: "en" satisfies SchoolLang,
-                data: {
-                    category: data["ENGLISH CATEGORY"],
-                    name: data["ENGLISH NAME"],
-                    address: data["ENGLISH ADDRESS"],
-                    longitude: data.LONGITUDE,
-                    latitude: data.LATITUDE,
-                    easting: data.EASTING,
-                    northing: data.NORTHING,
-                    studentsGender: data["STUDENTS GENDER"],
-                    session: data.SESSION,
-                    district: data.DISTRICT,
-                    financeType: data["FINANCE TYPE"],
-                    level: data["SCHOOL LEVEL"],
-                    telephone: data.TELEPHONE,
-                    fax: data["FAX NUMBER"],
-                },
-            });
+        const planEn: UpsertSchoolPlan | undefined = buildUpsertSchoolsPlan({
+            schools,
+            schoolId: data["SCHOOL NO."],
+            lang: "en" satisfies SchoolLang,
+            data: {
+                category: data["ENGLISH CATEGORY"],
+                name: data["ENGLISH NAME"],
+                address: data["ENGLISH ADDRESS"],
+                longitude: data.LONGITUDE,
+                latitude: data.LATITUDE,
+                easting: data.EASTING,
+                northing: data.NORTHING,
+                studentsGender: data["STUDENTS GENDER"],
+                session: data.SESSION,
+                district: data.DISTRICT,
+                financeType: data["FINANCE TYPE"],
+                level: data["SCHOOL LEVEL"],
+                telephone: data.TELEPHONE,
+                fax: data["FAX NUMBER"],
+            },
+        });
 
         planEn && plans.push(planEn);
 
         // zh-hant
 
-        const planZhHant: UpsertSchoolPlan | undefined =
-            await buildUpsertSchoolsPlan({
+        const planZhHant: UpsertSchoolPlan | undefined = buildUpsertSchoolsPlan(
+            {
                 schools,
                 schoolId: data["SCHOOL NO."],
                 lang: "zh-hant" satisfies SchoolLang,
@@ -153,7 +152,8 @@ const fetchSchool = async (): Promise<void> => {
                     telephone: data.聯絡電話,
                     fax: data.傳真號碼,
                 },
-            });
+            },
+        );
 
         planZhHant && plans.push(planZhHant);
     }
