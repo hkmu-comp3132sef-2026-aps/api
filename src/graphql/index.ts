@@ -5,7 +5,6 @@ import { createYoga } from "graphql-yoga";
 
 import { gql } from "#/configs/graphql";
 import { gqlInfoField } from "#/modules/info/graphql";
-import { gqlSchoolInfoField } from "#/modules/school/graphql/info";
 import {
     gqlSchoolField,
     gqlSchoolsConnectionField,
@@ -14,7 +13,6 @@ import {
 gql.queryType({
     fields: (t) => ({
         info: gqlInfoField(t),
-        schoolInfo: gqlSchoolInfoField(t),
         school: gqlSchoolField(t),
         schoolsConnection: gqlSchoolsConnectionField(t),
     }),

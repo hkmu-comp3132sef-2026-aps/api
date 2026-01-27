@@ -4,7 +4,7 @@ import type { School } from "#/modules/school/schemas/mongo";
 import { gql } from "#/configs/graphql";
 import { decodeCursor, encodeCursor } from "#/lib/graphql/cursor";
 import { enumsToGqlEnums, gqlEnumToEnum } from "#/lib/graphql/enum";
-import { schoolLang } from "#/modules/school/schemas/zod/langs/_common";
+import { schoolLang } from "#/modules/school/schemas/zod/_common";
 import {
     selectSchoolBySchoolIdAndLang,
     selectSchoolsWithCursor,
@@ -18,7 +18,7 @@ const GqlSchool = gql.objectRef<School>("School");
 
 GqlSchool.implement({
     fields: (t) => ({
-        schoolId: t.exposeID("schoolId"),
+        school_id: t.exposeID("school_id"),
         lang: t.exposeString("lang"),
         category: t.exposeString("category"),
         name: t.exposeString("name"),
@@ -27,10 +27,10 @@ GqlSchool.implement({
         latitude: t.exposeFloat("latitude"),
         easting: t.exposeFloat("easting"),
         northing: t.exposeFloat("northing"),
-        studentsGender: t.exposeString("studentsGender"),
+        students_gender: t.exposeString("students_gender"),
         session: t.exposeString("session"),
         district: t.exposeString("district"),
-        financeType: t.exposeString("financeType"),
+        finance_type: t.exposeString("finance_type"),
         level: t.exposeString("level"),
         telephone: t.exposeString("telephone"),
         fax: t.exposeString("fax"),
@@ -107,13 +107,13 @@ const gqlSchoolsConnectionField = (t: GqlQueryFieldBuilder) => {
 
                 const startCursor: string | undefined =
                     items.length > 0
-                        ? encodeCursor((items[0] as School).schoolId)
+                        ? encodeCursor((items[0] as School).school_id)
                         : void 0;
 
                 const endCursor: string | undefined =
                     items.length > 0
                         ? encodeCursor(
-                              (items[items.length - 1] as School).schoolId,
+                              (items[items.length - 1] as School).school_id,
                           )
                         : void 0;
 
@@ -125,7 +125,7 @@ const gqlSchoolsConnectionField = (t: GqlQueryFieldBuilder) => {
 
                 return {
                     edges: items.map((school: School) => ({
-                        cursor: encodeCursor(school.schoolId),
+                        cursor: encodeCursor(school.school_id),
                         node: school,
                     })),
                     pageInfo: {

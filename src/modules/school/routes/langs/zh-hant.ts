@@ -12,7 +12,7 @@ import {
     createJsonResponseErrorSchema,
     createJsonSuccessResponseSchema,
 } from "#/lib/schemas/response";
-import { schoolSchemaZhHant } from "#/modules/school/schemas/zod/langs/zh-hant";
+import { schoolSchemaZhHant } from "#/modules/school/schemas/zod/zh-hant";
 import {
     ServiceSchoolReadZhHantErrorCode,
     ServiceSchoolReadZhHantErrorMessage,

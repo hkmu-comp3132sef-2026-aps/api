@@ -1,7 +1,7 @@
 import type { FindCursor, WithId } from "mongodb";
 
 import type { School } from "#/modules/school/schemas/mongo";
-import type { SchoolLang } from "#/modules/school/schemas/zod/langs/_common";
+import type { SchoolLang } from "#/modules/school/schemas/zod/_common";
 
 import { schools } from "#/modules/school/schemas/mongo";
 
@@ -86,11 +86,6 @@ const selectSchoolsWithCursor = async ({
     return isBackward ? rows.reverse() : rows;
 };
 
-const selectSchools = async (): Promise<School[]> => {
-    const rows: School[] = await schools.find({}).toArray();
-    return rows;
-};
-
 export type {
     // school
     SelectSchoolBySchoolIdAndLangOptions,
@@ -102,5 +97,4 @@ export {
     selectSchoolBySchoolIdAndLang,
     // schools
     selectSchoolsWithCursor,
-    selectSchools,
 };

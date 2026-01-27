@@ -5,8 +5,8 @@ import { db } from "#/configs/database";
 const COLLECTION_NAME: string = "schools" as const;
 
 type School = {
+    school_id: number;
     lang: "en" | "zh-hant";
-    schoolId: number;
     category: string;
     name: string;
     address: string;
@@ -14,10 +14,10 @@ type School = {
     latitude: number;
     easting: number;
     northing: number;
-    studentsGender: string;
+    students_gender: string;
     session: string;
     district: string;
-    financeType: string;
+    finance_type: string;
     level: string;
     telephone: string;
     fax: string;

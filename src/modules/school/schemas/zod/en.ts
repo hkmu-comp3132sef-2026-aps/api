@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { schoolSchemaBase } from "#/modules/school/schemas/zod/langs/_common";
+import { schoolSchemaBase } from "#/modules/school/schemas/zod/_common";
 
 const schoolCategoryEn = [
     "Aided Primary Schools",
@@ -88,10 +88,10 @@ const schoolLevelEnumEn = z.enum(schoolLevelEn);
 const schoolSchemaEn = z.object({
     ...schoolSchemaBase.shape,
     category: schoolCategoryEnumEn,
-    studentsGender: schoolStudentsGenderEnumEn,
+    students_gender: schoolStudentsGenderEnumEn,
     session: schoolSessionEnumEn,
     district: schoolDistrictEnumEn,
-    financeType: schoolFinanceTypeEnumEn,
+    finance_type: schoolFinanceTypeEnumEn,
     level: schoolLevelEnumEn,
 });
 

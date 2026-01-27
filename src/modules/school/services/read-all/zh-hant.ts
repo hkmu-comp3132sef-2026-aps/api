@@ -1,11 +1,11 @@
 import type { School } from "#/modules/school/schemas/mongo";
-import type { SchoolLang } from "#/modules/school/schemas/zod/langs/_common";
-import type { SchoolZhHant } from "#/modules/school/schemas/zod/langs/zh-hant";
+import type { SchoolLang } from "#/modules/school/schemas/zod/_common";
+import type { SchoolZhHant } from "#/modules/school/schemas/zod/zh-hant";
 import type { ServiceSchoolReadAllEnOptions } from "#/modules/school/services/read-all/en";
 
 import { z } from "zod";
 
-import { schoolSchemaZhHant } from "#/modules/school/schemas/zod/langs/zh-hant";
+import { schoolSchemaZhHant } from "#/modules/school/schemas/zod/zh-hant";
 import { selectSchoolsWithCursor } from "#/modules/school/sql/select";
 
 type ServiceSchoolReadAllZhHantOptions = ServiceSchoolReadAllEnOptions;

@@ -1,9 +1,9 @@
 import type { School } from "#/modules/school/schemas/mongo";
-import type { SchoolLang } from "#/modules/school/schemas/zod/langs/_common";
-import type { SchoolZhHant } from "#/modules/school/schemas/zod/langs/zh-hant";
+import type { SchoolLang } from "#/modules/school/schemas/zod/_common";
+import type { SchoolZhHant } from "#/modules/school/schemas/zod/zh-hant";
 
 import { ServiceError } from "#/lib/errors/service";
-import { schoolSchemaZhHant } from "#/modules/school/schemas/zod/langs/zh-hant";
+import { schoolSchemaZhHant } from "#/modules/school/schemas/zod/zh-hant";
 import { selectSchoolBySchoolIdAndLang } from "#/modules/school/sql/select";
 
 enum ServiceSchoolReadZhHantErrorCode {
