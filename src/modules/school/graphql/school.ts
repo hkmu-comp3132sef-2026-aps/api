@@ -1,4 +1,8 @@
-import type { GqlQueryFieldBuilder } from "#/@types/graphql";
+import type {
+    GqlConnection,
+    GqlEdge,
+    GqlQueryFieldBuilder,
+} from "#/@types/graphql";
 import type { School } from "#/modules/school/schemas/mongo";
 
 import { gql } from "#/configs/graphql";
@@ -6,6 +10,7 @@ import { decodeCursor, encodeCursor } from "#/lib/graphql/cursor";
 import { enumsToGqlEnums, gqlEnumToEnum } from "#/lib/graphql/enum";
 import { schoolLang } from "#/modules/school/schemas/zod/_common";
 import {
+    countSchools,
     selectSchoolBySchoolIdAndLang,
     selectSchoolsWithCursor,
 } from "#/modules/school/sql/select";
@@ -71,7 +76,7 @@ const gqlSchoolsConnectionField = (t: GqlQueryFieldBuilder) => {
                     required: false,
                 }),
             },
-            resolve: async (_, args) => {
+            resolve: async (_, args): Promise<GqlConnection<School>> => {
                 const isForward: boolean = typeof args.first === "number";
                 const isBackward: boolean = typeof args.last === "number";
 
@@ -98,6 +103,7 @@ const gqlSchoolsConnectionField = (t: GqlQueryFieldBuilder) => {
 
                 if (items.length === 0)
                     return {
+                        totalCount: 0,
                         edges: [],
                         pageInfo: {
                             hasNextPage: false,
@@ -124,10 +130,16 @@ const gqlSchoolsConnectionField = (t: GqlQueryFieldBuilder) => {
                     hasExtraRow && items.length > 0;
 
                 return {
-                    edges: items.map((school: School) => ({
-                        cursor: encodeCursor(school.school_id),
-                        node: school,
-                    })),
+                    totalCount: await countSchools({
+                        lang: gqlEnumToEnum(args.lang),
+                        search: args.search ?? void 0,
+                    }),
+                    edges: items.map(
+                        (school: School): GqlEdge<School> => ({
+                            cursor: encodeCursor(school.school_id),
+                            node: school,
+                        }),
+                    ),
                     pageInfo: {
                         startCursor,
                         endCursor,

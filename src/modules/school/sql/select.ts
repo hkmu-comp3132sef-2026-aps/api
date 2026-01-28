@@ -86,15 +86,38 @@ const selectSchoolsWithCursor = async ({
     return isBackward ? rows.reverse() : rows;
 };
 
+type CountSchoolsOptions = {
+    lang: SchoolLang;
+    search?: string;
+};
+
+const countSchools = async ({
+    lang,
+    search,
+}: CountSchoolsOptions): Promise<number> => {
+    return await schools.countDocuments({
+        lang,
+        ...(search &&
+            search.trim().length > 0 && {
+                name: {
+                    $regex: search.trim(),
+                    $options: "i",
+                },
+            }),
+    });
+};
+
 export type {
     // school
     SelectSchoolBySchoolIdAndLangOptions,
     // schools
     SelectSchoolsWithCursorOptions,
+    CountSchoolsOptions,
 };
 export {
     // school
     selectSchoolBySchoolIdAndLang,
     // schools
     selectSchoolsWithCursor,
+    countSchools,
 };

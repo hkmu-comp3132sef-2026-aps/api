@@ -1,13 +1,17 @@
 import SchemaBuilder from "@pothos/core";
 import RelayPlugin from "@pothos/plugin-relay";
 
-const gql = new SchemaBuilder({
+const gql = new SchemaBuilder<{
+    Connection: {
+        totalCount: number;
+    };
+}>({
     plugins: [
         RelayPlugin,
     ],
 });
 
-type Gql = typeof gql;
+type GQL = typeof gql;
 
-export type { Gql };
+export type { GQL };
 export { gql };

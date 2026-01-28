@@ -10,6 +10,13 @@ import {
     gqlSchoolsConnectionField,
 } from "#/modules/school/graphql/school";
 
+gql.globalConnectionFields((t) => ({
+    totalCount: t.int({
+        nullable: false,
+        resolve: (parent) => parent.totalCount,
+    }),
+}));
+
 gql.queryType({
     fields: (t) => ({
         info: gqlInfoField(t),
