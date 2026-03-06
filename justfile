@@ -1,10 +1,9 @@
 set shell := ["bash", "-cu"]
-set windows-shell := ["powershell"]
+set windows-shell := ["pwsh", "-Command"]
 
-node_bin := "node_modules/.bin/"
-tsc := node_bin + "tsc"
-biome := node_bin + "biome"
-vite := node_bin + "vite"
+tsc := "pnpm exec tsc"
+biome := "pnpm exec biome"
+vite := "pnpm exec vite"
 
 # Default action
 _:
@@ -15,42 +14,73 @@ _:
 i:
     pnpm install
 
+# Install with frozen-lockfile
+if:
+    pnpm install --frozen-lockfile
+
 # Upgrade dependencies
 up:
     pnpm up --interactive --latest --recursive
 
 # Lint code with TypeScript Compiler
 tsc:
-    ./{{tsc}} --noEmit
+    {{tsc}} --noEmit
 
 # Lint code
 lint:
-    ls-lint
+    cd ./src && ls-lint -config ../.ls-lint.yaml
     typos
     just tsc
 
 # Format code
 fmt:
-    ./{{biome}} check --write .
+    {{biome}} check --write .
 
 # Start development server
 dev:
-    ./{{vite}}
+    {{vite}}
 
 # Build for production
 build:
-    ./{{vite}} build
+    {{vite}} build
 
 # Production preview
 start:
     node ./dist/index.js
 
-# Clean builds
-clean:
+# Clean builds (Linux)
+clean-linux:
     rm -rf ./dist
-    rm ./.cache.db
+
+# Clean builds (macOS)
+clean-macos:
+    just clean-linux
+
+# Clean builds (Windows)
+clean-windows:
+    Remove-Item -Recurse -Force ./dist
+
+# Clean
+clean:
+    just clean-{{os()}}
+
+# Clean everything (Linux)
+clean-all-linux:
+    just clean
+
+    rm -rf ./node_modules
+
+# Clean everything (macOS)
+clean-all-macos:
+    just clean-all-linux
+
+# Clean everything (Windows)
+clean-all-windows:
+    just clean
+
+    Remove-Item -Recurse -Force ./node_modules
 
 # Clean everything
 clean-all:
-    just clean
-    rm -rf ./node_modules
+    just clean-all-{{os()}}
+
