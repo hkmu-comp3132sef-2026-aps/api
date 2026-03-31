@@ -24,4 +24,4 @@ const MONGODB_URI: string =
  */
 const MONGODB_DB_NAME: string = import.meta.env.VITE_MONGODB_DB_NAME ?? "sch";
 
-export { IS_DEV, IS_PRD, VERSION, MONGODB_URI, MONGODB_DB_NAME };
+export { IS_DEV, IS_PRD, MONGODB_DB_NAME, MONGODB_URI, VERSION };

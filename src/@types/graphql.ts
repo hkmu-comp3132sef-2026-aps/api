@@ -25,4 +25,4 @@ type GqlConnection<T> = {
     pageInfo: GqlPageInfo;
 };
 
-export type { GqlQueryFieldBuilder, GqlEdge, GqlPageInfo, GqlConnection };
+export type { GqlConnection, GqlEdge, GqlPageInfo, GqlQueryFieldBuilder };

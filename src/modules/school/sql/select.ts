@@ -108,16 +108,16 @@ const countSchools = async ({
 };
 
 export type {
+    CountSchoolsOptions,
     // school
     SelectSchoolBySchoolIdAndLangOptions,
     // schools
     SelectSchoolsWithCursorOptions,
-    CountSchoolsOptions,
 };
 export {
+    countSchools,
     // school
     selectSchoolBySchoolIdAndLang,
     // schools
     selectSchoolsWithCursor,
-    countSchools,
 };

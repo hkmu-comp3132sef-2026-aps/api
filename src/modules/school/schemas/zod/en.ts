@@ -101,10 +101,6 @@ export type { SchoolEn };
 export {
     schoolCategoryEn,
     schoolCategoryEnumEn,
-    schoolStudentsGenderEn,
-    schoolStudentsGenderEnumEn,
-    schoolSessionEn,
-    schoolSessionEnumEn,
     schoolDistrictEn,
     schoolDistrictEnumEn,
     schoolFinanceTypeEn,
@@ -112,4 +108,8 @@ export {
     schoolLevelEn,
     schoolLevelEnumEn,
     schoolSchemaEn,
+    schoolSessionEn,
+    schoolSessionEnumEn,
+    schoolStudentsGenderEn,
+    schoolStudentsGenderEnumEn,
 };
