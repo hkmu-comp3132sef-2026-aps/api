@@ -99,4 +99,3 @@ clean-all-windows:
 # Clean everything
 clean-all:
     just clean-all-{{os()}}
-
