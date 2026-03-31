@@ -7,8 +7,7 @@ vite := "pnpm exec vite"
 
 # Default action
 _:
-    just lint
-    just fmt
+    just --list -u
 
 # Install
 i:
@@ -22,19 +21,36 @@ if:
 up:
     pnpm up --interactive --latest --recursive
 
+# Format code
+fmt:
+    {{biome}} check --write .
+
+# Lint code with ls-lint
+ls-lint:
+    cd ./src && ls-lint -config ../.ls-lint.yaml
+
+# Lint code with ls-lint
+lslint:
+    just ls-lint
+
+# Lint code with typos
+typos:
+    typos
+
 # Lint code with TypeScript Compiler
 tsc:
     {{tsc}} --noEmit
 
 # Lint code
 lint:
-    cd ./src && ls-lint -config ../.ls-lint.yaml
-    typos
+    just lslint
+    just typos
     just tsc
 
-# Format code
-fmt:
-    {{biome}} check --write .
+# Check code
+check:
+    just fmt
+    just lint
 
 # Start development server
 dev:
