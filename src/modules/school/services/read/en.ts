@@ -24,7 +24,7 @@ const getErrorMessage = (
 };
 
 type ServiceSchollReadEnOptions = {
-    schoolId: number;
+    schoolId: string;
 };
 
 const serviceSchoolReadEn = async (

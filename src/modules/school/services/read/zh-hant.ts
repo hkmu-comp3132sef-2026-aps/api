@@ -24,7 +24,7 @@ const getErrorMessage = (
 };
 
 type ServiceSchollReadZhHantOptions = {
-    schoolId: number;
+    schoolId: string;
 };
 
 const serviceSchoolReadZhHant = async (

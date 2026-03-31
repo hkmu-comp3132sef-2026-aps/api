@@ -29,9 +29,9 @@ router.get(
         z.object({
             search: z.string().optional(),
             first: z.coerce.number().optional(),
-            after: z.coerce.number().optional(),
+            after: z.coerce.string().optional(),
             last: z.coerce.number().optional(),
-            before: z.coerce.number().optional(),
+            before: z.coerce.string().optional(),
         }),
     ),
     describeRoute({
@@ -136,7 +136,7 @@ router.get(
     validator(
         "param",
         z.object({
-            schoolId: z.coerce.number(),
+            schoolId: z.coerce.string(),
         }),
     ),
     describeRoute({

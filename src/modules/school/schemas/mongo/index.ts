@@ -5,7 +5,7 @@ import { db } from "#/configs/database";
 const COLLECTION_NAME: string = "schools" as const;
 
 type School = {
-    school_id: number;
+    school_id: string;
     lang: "en" | "zh-hant";
     category: string;
     name: string;

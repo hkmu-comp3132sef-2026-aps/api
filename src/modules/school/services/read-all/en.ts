@@ -11,10 +11,10 @@ type ServiceSchoolReadAllEnOptions = {
     search?: string;
     // forward pagination
     first?: number;
-    after?: number;
+    after?: string;
     // backward pagination
     last?: number;
-    before?: number;
+    before?: string;
 };
 
 const serviceSchoolReadAllEn = async (

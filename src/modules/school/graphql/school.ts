@@ -46,11 +46,11 @@ const gqlSchoolField = (t: GqlQueryFieldBuilder) => {
     return t.field({
         type: GqlSchool,
         args: {
-            schoolId: t.arg.int({
-                required: true,
-            }),
             lang: t.arg({
                 type: GqlSchoolLang,
+                required: true,
+            }),
+            schoolId: t.arg.string({
                 required: true,
             }),
         },

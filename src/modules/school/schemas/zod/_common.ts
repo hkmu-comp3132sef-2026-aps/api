@@ -10,7 +10,7 @@ const schoolLangSchema = z.enum(schoolLang);
 type SchoolLang = z.infer<typeof schoolLangSchema>;
 
 const schoolSchemaBase = z.object({
-    school_id: z.number(),
+    school_id: z.string(),
     lang: schoolLangSchema,
     // ...category
     name: z.string(),

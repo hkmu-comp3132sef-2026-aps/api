@@ -6,15 +6,15 @@ import type { SchoolLang } from "#/modules/school/schemas/zod/_common";
 import { schools } from "#/modules/school/schemas/mongo";
 
 type SelectSchoolBySchoolIdAndLangOptions = {
-    schoolId: number;
     lang: SchoolLang;
+    schoolId: string;
 };
 
 const selectSchoolBySchoolIdAndLang = async (
     options: SelectSchoolBySchoolIdAndLangOptions,
 ): Promise<School | undefined> => {
     const query: School | null = await schools.findOne({
-        schoolId: options.schoolId,
+        school_id: options.schoolId,
         lang: options.lang,
     });
 
@@ -26,10 +26,10 @@ type SelectSchoolsWithCursorOptions = {
     search?: string;
     // forward pagination
     first?: number;
-    after?: number;
+    after?: string;
     // backward pagination
     last?: number;
-    before?: number;
+    before?: string;
 };
 
 const selectSchoolsWithCursor = async ({
@@ -51,13 +51,13 @@ const selectSchoolsWithCursor = async ({
             lang,
             ...(isForward &&
                 after && {
-                    schoolId: {
+                    school_id: {
                         $gt: after,
                     },
                 }),
             ...(isBackward &&
                 before && {
-                    schoolId: {
+                    school_id: {
                         $lt: before,
                     },
                 }),
@@ -70,7 +70,7 @@ const selectSchoolsWithCursor = async ({
                 }),
         })
         .sort({
-            schoolId: last ? -1 : 1,
+            school_id: last ? -1 : 1,
         });
 
     const limit: number | undefined = isUnpaginated
