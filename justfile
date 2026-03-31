@@ -54,7 +54,7 @@ check:
 
 # Start development server
 dev:
-    {{vite}}
+    {{vite}} dev
 
 # Build for production
 build:
