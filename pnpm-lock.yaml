@@ -29,6 +29,9 @@ importers:
       '@scalar/hono-api-reference':
         specifier: ~0.10.5
         version: 0.10.5(hono@4.12.9)
+      '@whatwg-node/server':
+        specifier: ~0.10.18
+        version: 0.10.18
       graphql:
         specifier: ^16.13.2
         version: 16.13.2
